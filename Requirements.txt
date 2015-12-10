@@ -1,0 +1,7 @@
+Requirements:
+	1. Takes list of English words
+	2. Accesses online dictionary 
+		- Cambridge: http://dictionary.cambridge.org/dictionary/english/”word”
+	3. For each word returns a list of one or more definitions, grouped by type (noun, verb, adj.) 
+	4. Allows the user to select the most appropriate definition.
+	5. Outputs a csv file with the word/definition pairs.
