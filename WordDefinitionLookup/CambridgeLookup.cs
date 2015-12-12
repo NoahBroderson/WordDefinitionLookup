@@ -4,13 +4,19 @@ using System.Net;
 
 namespace WordDefinitionLookup
 {
-    class CambridgeWord
+    public class CambridgeWord
     {
         private string lookupWord;
 
         public string Word
         {
             get { return lookupWord; }
+            set
+            {
+                lookupWord = value;
+                GetDefinitions();
+            }
+
         }
 
         private string topDefinition;
@@ -32,6 +38,11 @@ namespace WordDefinitionLookup
         {
             lookupWord = baseWord;
 
+            GetDefinitions();
+        }
+
+        private void GetDefinitions()
+        {
             wordDefinitions = this.Lookup();
 
             if (wordDefinitions.Count > 0)

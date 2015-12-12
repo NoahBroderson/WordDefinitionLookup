@@ -9,27 +9,15 @@ namespace WordDefinitionLookup
     public partial class frmWordLookup : Form
     {
         List<CambridgeWord> wordList = new List<CambridgeWord>();
-        
+
         public frmWordLookup()
         {
             InitializeComponent();            
         }
 
-        private void btnLookup_Click(object sender, EventArgs e)
+        private void frmWordLookup_Load(object sender, EventArgs e)
         {
-            ClearForm();
-            
-            foreach (var word in txtWordList.Lines)
-            {
-                var vocabWord = new CambridgeWord(word.ToLower());
 
-                if (word.Length > 0)
-                {
-                wordList.Add(vocabWord);
-                }
-            }
-
-            RefreshDefinitionList();            
         }
 
         private void ClearForm()
@@ -58,23 +46,32 @@ namespace WordDefinitionLookup
             var selectedWord = lbTopDefinitions.SelectedItem as CambridgeWord;
             
             selectedWord.Definition = lbAltDefinitions.SelectedItem.ToString();
-            lbTopDefinitions.DataSource = null;
+            
 
-            RefreshDefinitionList();
+            RefreshTopDefinitionsList();
         }
 
-        private void RefreshDefinitionList()
+        private void RefreshTopDefinitionsList()
         {
+            lbTopDefinitions.DataSource = null; 
             lbTopDefinitions.DataSource = wordList;
             lbTopDefinitions.DisplayMember = "Definition";
             lbTopDefinitions.ValueMember = "Word";
             lbTopDefinitions.Refresh();
         }
-        private void frmWordLookup_Load(object sender, EventArgs e)
+
+        private void RefreshWordList()
         {
-
+           
+            
+            lbWordList.DataSource = null;
+            lbWordList.Items.Clear();
+            lbWordList.DataSource = wordList;
+            lbWordList.DisplayMember = "Word";
+            lbWordList.ValueMember = "Word";
+            lbWordList.Refresh();
         }
-
+       
         private void btnExport_Click(object sender, EventArgs e)
         {
             ExportToCSV(wordList);
@@ -104,6 +101,71 @@ namespace WordDefinitionLookup
             {
                 MessageBox.Show(string.Format("Error saving export file {0}. Error message: {1}", fileName, error.Message));
             }
+        }
+
+        private void lbTopDefinitions_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var lb = (ListBox)sender;
+            var editForm = new frmEditDefinition((CambridgeWord)lb.SelectedItem);
+            editForm.ShowDialog();
+            RefreshTopDefinitionsList();
+
+
+        }
+
+        private void btnPasteList_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string clipBoardText = Clipboard.GetText();
+                string[] wordList = clipBoardText.Split(new string[] { Environment.NewLine },StringSplitOptions.None);
+                lbWordList.DataSource = null;
+                lbWordList.Items.Clear();
+                lbTopDefinitions.DataSource = null;
+                lbTopDefinitions.Items.Clear();
+                lbAltDefinitions.DataSource = null;
+                lbAltDefinitions.Items.Clear();
+
+                foreach (string item in wordList)
+                {
+                    lbWordList.Items.Add(item);
+
+                }
+            }
+            catch (Exception Error)
+            {
+                
+                MessageBox.Show(string.Format("Error pasting from clipboard. Error message: {0}", Error.Message));
+
+            }
+        }
+
+        private void btnLookup_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+
+            foreach (string word in lbWordList.Items)
+            {
+                var vocabWord = new CambridgeWord(word.ToLower());
+
+                if (word.Length > 0)
+                {
+                    wordList.Add(vocabWord);
+                }
+            }
+
+            RefreshTopDefinitionsList();
+            RefreshWordList();
+        }
+
+        private void lbWordList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var lb = (ListBox)sender;
+            CambridgeWord selectedWord = (CambridgeWord)lb.SelectedItem;
+            frmEdit editForm = new frmEdit(selectedWord, "Word");
+            editForm.ShowDialog();
+            RefreshWordList();
+            RefreshTopDefinitionsList();
         }
     }
 }

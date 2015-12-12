@@ -1,7 +1,13 @@
 Requirements:
-	1. Takes list of English words
-	2. Accesses online dictionary 
+	X - 1. Takes list of English words
+	X- 2. Accesses online dictionary 
 		- Cambridge: http://dictionary.cambridge.org/dictionary/english/”word”
-	3. For each word returns a list of one or more definitions, grouped by type (noun, verb, adj.) 
-	4. Allows the user to select the most appropriate definition.
-	5. Outputs a csv file with the word/definition pairs.
+	X - 3. For each word returns a list of one or more definitions
+	X - 4. Allows the user to select the most appropriate definition.
+	X- 5. Outputs a csv file with the word/definition pairs.
+
+Updated Requirements
+	1. Permit user to edit word and rerun lookup only on changed word
+	2. Permit user to edit definition before export
+	3. Enlarge definition area to allow full viewing of longer definitions
+
