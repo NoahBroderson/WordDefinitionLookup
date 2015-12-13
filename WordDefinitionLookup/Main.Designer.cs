@@ -42,9 +42,9 @@
             // lblTopDefs
             // 
             this.lblTopDefs.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTopDefs.Location = new System.Drawing.Point(274, 37);
+            this.lblTopDefs.Location = new System.Drawing.Point(205, 37);
             this.lblTopDefs.Name = "lblTopDefs";
-            this.lblTopDefs.Size = new System.Drawing.Size(385, 23);
+            this.lblTopDefs.Size = new System.Drawing.Size(490, 23);
             this.lblTopDefs.TabIndex = 7;
             this.lblTopDefs.Text = "Top Definitions";
             this.lblTopDefs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -62,19 +62,22 @@
             // lbTopDefinitions
             // 
             this.lbTopDefinitions.AllowDrop = true;
+            this.lbTopDefinitions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbTopDefinitions.ColumnWidth = 100;
             this.lbTopDefinitions.FormattingEnabled = true;
             this.lbTopDefinitions.HorizontalScrollbar = true;
-            this.lbTopDefinitions.Location = new System.Drawing.Point(251, 64);
+            this.lbTopDefinitions.Location = new System.Drawing.Point(205, 64);
             this.lbTopDefinitions.Name = "lbTopDefinitions";
-            this.lbTopDefinitions.Size = new System.Drawing.Size(444, 342);
+            this.lbTopDefinitions.Size = new System.Drawing.Size(490, 342);
             this.lbTopDefinitions.TabIndex = 9;
             this.lbTopDefinitions.SelectedIndexChanged += new System.EventHandler(this.lbTopDefinitions_SelectedIndexChanged);
             this.lbTopDefinitions.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbTopDefinitions_MouseDoubleClick);
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(445, 412);
+            this.btnExport.Location = new System.Drawing.Point(620, 412);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(75, 23);
             this.btnExport.TabIndex = 10;
@@ -96,7 +99,7 @@
             // 
             this.btnPasteList.Location = new System.Drawing.Point(34, 412);
             this.btnPasteList.Name = "btnPasteList";
-            this.btnPasteList.Size = new System.Drawing.Size(75, 23);
+            this.btnPasteList.Size = new System.Drawing.Size(61, 23);
             this.btnPasteList.TabIndex = 14;
             this.btnPasteList.Text = "Paste List";
             this.btnPasteList.UseVisualStyleBackColor = true;
@@ -110,8 +113,9 @@
             this.lbWordList.HorizontalScrollbar = true;
             this.lbWordList.Location = new System.Drawing.Point(34, 64);
             this.lbWordList.Name = "lbWordList";
-            this.lbWordList.Size = new System.Drawing.Size(179, 342);
+            this.lbWordList.Size = new System.Drawing.Size(132, 342);
             this.lbWordList.TabIndex = 13;
+            this.lbWordList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbWordList_KeyDown);
             this.lbWordList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbWordList_MouseDoubleClick);
             // 
             // lblWordList
@@ -119,16 +123,16 @@
             this.lblWordList.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWordList.Location = new System.Drawing.Point(34, 38);
             this.lblWordList.Name = "lblWordList";
-            this.lblWordList.Size = new System.Drawing.Size(179, 23);
+            this.lblWordList.Size = new System.Drawing.Size(132, 23);
             this.lblWordList.TabIndex = 12;
             this.lblWordList.Text = "Word List";
             this.lblWordList.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnLookup
             // 
-            this.btnLookup.Location = new System.Drawing.Point(138, 412);
+            this.btnLookup.Location = new System.Drawing.Point(101, 412);
             this.btnLookup.Name = "btnLookup";
-            this.btnLookup.Size = new System.Drawing.Size(75, 23);
+            this.btnLookup.Size = new System.Drawing.Size(65, 23);
             this.btnLookup.TabIndex = 15;
             this.btnLookup.Text = "Lookup";
             this.btnLookup.UseVisualStyleBackColor = true;
@@ -148,9 +152,11 @@
             this.Controls.Add(this.lbTopDefinitions);
             this.Controls.Add(this.lblAltDefinitions);
             this.Controls.Add(this.lblTopDefs);
+            this.KeyPreview = true;
             this.Name = "frmWordLookup";
             this.Text = "Word Lookup";
             this.Load += new System.EventHandler(this.frmWordLookup_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmWordLookup_KeyDown);
             this.ResumeLayout(false);
 
         }

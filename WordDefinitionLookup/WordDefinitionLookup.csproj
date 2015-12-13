@@ -53,12 +53,6 @@
     <Compile Include="EditForm - Copy.Designer.cs">
       <DependentUpon>EditForm - Copy.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditForm.Designer.cs">
-      <DependentUpon>EditForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,9 +63,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="EditForm - Copy.resx">
       <DependentUpon>EditForm - Copy.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditForm.resx">
-      <DependentUpon>EditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

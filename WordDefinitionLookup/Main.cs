@@ -106,19 +106,22 @@ namespace WordDefinitionLookup
         private void lbTopDefinitions_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             var lb = (ListBox)sender;
-            var editForm = new frmEditDefinition((CambridgeWord)lb.SelectedItem);
+            var editForm = new frmEdit((CambridgeWord)lb.SelectedItem, "Definition");
             editForm.ShowDialog();
             RefreshTopDefinitionsList();
-
-
         }
 
         private void btnPasteList_Click(object sender, EventArgs e)
         {
+            PasteWordList();
+        }
+
+        private void PasteWordList()
+        {
             try
             {
                 string clipBoardText = Clipboard.GetText();
-                string[] wordList = clipBoardText.Split(new string[] { Environment.NewLine },StringSplitOptions.None);
+                string[] wordList = clipBoardText.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
                 lbWordList.DataSource = null;
                 lbWordList.Items.Clear();
                 lbTopDefinitions.DataSource = null;
@@ -131,10 +134,12 @@ namespace WordDefinitionLookup
                     lbWordList.Items.Add(item);
 
                 }
+
+                btnLookup.Enabled = true;
             }
             catch (Exception Error)
             {
-                
+
                 MessageBox.Show(string.Format("Error pasting from clipboard. Error message: {0}", Error.Message));
 
             }
@@ -142,30 +147,74 @@ namespace WordDefinitionLookup
 
         private void btnLookup_Click(object sender, EventArgs e)
         {
-            ClearForm();
-
-            foreach (string word in lbWordList.Items)
+            try
             {
-                var vocabWord = new CambridgeWord(word.ToLower());
+                ClearForm();
 
-                if (word.Length > 0)
+                foreach (string word in lbWordList.Items)
                 {
-                    wordList.Add(vocabWord);
-                }
-            }
+                    var vocabWord = new CambridgeWord(word.ToLower());
 
-            RefreshTopDefinitionsList();
-            RefreshWordList();
+                    if (word.Length > 0)
+                    {
+                        wordList.Add(vocabWord);
+                    }
+                }
+
+                RefreshTopDefinitionsList();
+                RefreshWordList();
+                btnLookup.Enabled = false;
+            }
+            catch (Exception Error)
+            {
+                
+                MessageBox.Show(string.Format("Error running lookup. Error message {0}", Error.Message));
+            }
+            
         }
 
         private void lbWordList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            var lb = (ListBox)sender;
-            CambridgeWord selectedWord = (CambridgeWord)lb.SelectedItem;
-            frmEdit editForm = new frmEdit(selectedWord, "Word");
-            editForm.ShowDialog();
-            RefreshWordList();
-            RefreshTopDefinitionsList();
+            if (lbWordList.DataSource != null)            
+            {
+                var lb = (ListBox)sender;
+                CambridgeWord selectedWord = (CambridgeWord)lb.SelectedItem;
+                frmEdit editForm = new frmEdit(selectedWord, "Word");
+                editForm.ShowDialog();
+                RefreshWordList();
+                RefreshTopDefinitionsList();
+            }
         }
+
+        
+
+        private void frmWordLookup_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                PasteWordList();
+            }
+
+            
+        }
+
+        private void lbWordList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (lbWordList.DataSource != null)
+                {
+                    this.wordList.Remove((CambridgeWord)lbWordList.SelectedItem);
+                    RefreshTopDefinitionsList();
+                    RefreshWordList();
+                }
+                else
+                {
+                    lbWordList.Items.Remove(lbWordList.SelectedItem);
+                }
+            }
+        }
+
+        
     }
 }

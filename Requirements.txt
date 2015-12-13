@@ -7,7 +7,12 @@ Requirements:
 	X- 5. Outputs a csv file with the word/definition pairs.
 
 Updated Requirements
-	1. Permit user to edit word and rerun lookup only on changed word
-	2. Permit user to edit definition before export
-	3. Enlarge definition area to allow full viewing of longer definitions
+	X - 1. Permit user to edit word and rerun lookup only on changed word
+	X - 2. Permit user to edit definition before export
+	X - 3. Enlarge definition area to allow full viewing of longer definitions
+
+Optional 
+	1. Resize form and Listbox controls
+	2. Set tab order and default enter action
+	3. 
 

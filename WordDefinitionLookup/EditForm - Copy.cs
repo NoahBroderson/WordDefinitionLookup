@@ -59,7 +59,7 @@ namespace WordDefinitionLookup
             }
             else
             {
-                txtEditField.Text = wordToEdit.Definition;
+                wordToEdit.Definition = txtEditField.Text ;
             }
             this.Close();
         }
