@@ -59,6 +59,7 @@
             this.btnCancelDef.TabIndex = 2;
             this.btnCancelDef.Text = "Cancel";
             this.btnCancelDef.UseVisualStyleBackColor = true;
+            this.btnCancelDef.Click += new System.EventHandler(this.btnCancelDef_Click);
             // 
             // frmEdit
             // 

@@ -12,7 +12,7 @@ namespace WordDefinitionLookup
 {
     public partial class frmEdit : Form
     {
-        private CambridgeWord wordToEdit;
+        private VocabWord wordToEdit;
         private string wordProperty;
 
         public frmEdit()
@@ -20,7 +20,7 @@ namespace WordDefinitionLookup
             InitializeComponent();
         }
 
-        public frmEdit(CambridgeWord selectedWord, string propertyToEdit)
+        public frmEdit(VocabWord selectedWord, string propertyToEdit)
         {
             try
             {
@@ -61,6 +61,11 @@ namespace WordDefinitionLookup
             {
                 wordToEdit.Definition = txtEditField.Text ;
             }
+            this.Close();
+        }
+
+        private void btnCancelDef_Click(object sender, EventArgs e)
+        {
             this.Close();
         }
     }

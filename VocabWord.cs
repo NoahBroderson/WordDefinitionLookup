@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
 
-namespace WordDefinitionLookup
+public class VocabWord      
 {
-    public class CambridgeWord
-    {
+	public VocabWord()
+	{
+	}
+    
         private string lookupWord;
 
         public string Word
@@ -34,7 +34,7 @@ namespace WordDefinitionLookup
             get { return wordDefinitions; }
         }
 
-        public CambridgeWord(string baseWord)
+        public VocabWord(string baseWord)
         {
             lookupWord = baseWord;
 
@@ -93,8 +93,10 @@ namespace WordDefinitionLookup
         private List<string> GetDefinitions(string lookupHTML)
         {
             int processingPoint = 0;
-            int nextGuideWord = lookupHTML.IndexOf("<span class=\"guideword\"", processingPoint);
-            int nextDefinition = lookupHTML.IndexOf("<span class=\"def\"", processingPoint);
+            //int nextGuideWord = lookupHTML.IndexOf("<span class=\"guideword\"", processingPoint);
+            //int nextDefinition = lookupHTML.IndexOf("<span class=\"def\"", processingPoint);
+            int nextGuideWord = lookupHTML.IndexOf("<span class=\"def-info\">", processingPoint);
+            int nextDefinition = lookupHTML.IndexOf("<b class=\"def", processingPoint);
             string guideWord = "";
             string wordDefinition;
             List<string> defintions = new List<string>();
@@ -118,8 +120,11 @@ namespace WordDefinitionLookup
                     }
 
                     processingPoint += 1;
-                    nextGuideWord = lookupHTML.IndexOf("<span class=\"guideword\"", processingPoint);
-                    nextDefinition = lookupHTML.IndexOf("<span class=\"def\"", processingPoint);
+                    //nextGuideWord = lookupHTML.IndexOf("<span class=\"guideword\"", processingPoint);
+                    //nextDefinition = lookupHTML.IndexOf("<span class=\"def\"", processingPoint);
+
+                    nextGuideWord = lookupHTML.IndexOf("<span class=\"def-info\">", processingPoint);
+                    nextDefinition = lookupHTML.IndexOf("<b class=\"def", processingPoint);
 
                 } while (processingPoint < nextDefinition);
             }
@@ -144,4 +149,3 @@ namespace WordDefinitionLookup
             return sectionClean;
         }
     }
-}

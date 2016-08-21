@@ -10,9 +10,17 @@ Updated Requirements
 	X - 1. Permit user to edit word and rerun lookup only on changed word
 	X - 2. Permit user to edit definition before export
 	X - 3. Enlarge definition area to allow full viewing of longer definitions
+	4. Export to Quizlet using API - http://stackoverflow.com/questions/19246069/sending-an-array-as-part-of-a-put-method-in-c-sharp
+		a. Dropdown to select User/Password to add list to
+			i. Multiselect for group vocab lists
+		b. Send to Quizlet button
+		c. Copy link text to clipboard to past in email
 
 Optional 
-	1. Resize form and Listbox controls
+	X - 1. Resize form and Listbox controls
 	2. Set tab order and default enter action
-	3. 
+	X - 3. Remove leading "- " from wordlist on paste
+	X - 4. Remove sample sentance from Cambridge definition results
+
+
 
