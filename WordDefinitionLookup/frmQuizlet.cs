@@ -53,22 +53,34 @@ namespace WordDefinitionLookup
 
             //string QuizletSample = "https://quizlet.com/authorize?response_type=code&client_id=" + ClientID + "&scope=read&state=" + Random.ToString();
             string Endpoint = "https://quizlet.com/authorize";
-            string Parameters = "?response_type=code&client_id=" + ClientID + "&scope=read&state=" + Random.ToString();
+            string Parameters = "?response_type=code&client_id=" + ClientID + "&scope=read&state=" + Random.ToString() + "&redirect_uri=http://shop.english4finance.de/produkte.html";
+            //Example URI: https://quizlet.com/authorize?response_type=code&client_id=MY_CLIENT_ID&scope=read&state=RANDOM_STRING
             string Request = Endpoint + "/" + Parameters;
-            WebRequest myRequest = WebRequest.Create(Request);
+            wbAuthorize.Navigated += OnNavigated;
+            wbAuthorize.Url = new System.Uri(Request);
+            //var myRequest = WebRequest.Create(Request);
+            //myRequest.Method = "HEAD";
+
 
             // Return the response. 
-            WebResponse myResponse = myRequest.GetResponse();
+            //var myResponse = myRequest.GetResponse();
             // Code to use the WebResponse goes here.
-            MessageBox.Show(myResponse.ResponseUri.Query);
-            foreach (var item in myResponse.Headers)
-            {
-                MessageBox.Show(item.ToString());
-            }
-            // Close the response to free resources.
-            myResponse.Close();
+            //MessageBox.Show(myResponse.ResponseUri.ToString());
+            //foreach (var item in myResponse.Headers)
+            //{
+            //    MessageBox.Show(item.ToString());
+            //}
+            //// Close the response to free resources.
+            //myResponse.Close();
 
         }
+
+        private void OnNavigated(object sender, WebBrowserNavigatedEventArgs e)
+        {
+            //MessageBox.Show(e.Url.AbsoluteUri);
+            txtURI.Text = e.Url.ToString();
+        }
+
         private void testcall()
         {
            

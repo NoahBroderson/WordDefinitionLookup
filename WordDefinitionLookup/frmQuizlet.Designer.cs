@@ -32,6 +32,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btnAuthorize = new System.Windows.Forms.Button();
             this.wbAuthorize = new System.Windows.Forms.WebBrowser();
+            this.txtURI = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtInfo
@@ -63,17 +64,25 @@
             // 
             // wbAuthorize
             // 
-            this.wbAuthorize.Location = new System.Drawing.Point(199, 46);
+            this.wbAuthorize.Location = new System.Drawing.Point(199, 92);
             this.wbAuthorize.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbAuthorize.Name = "wbAuthorize";
-            this.wbAuthorize.Size = new System.Drawing.Size(715, 336);
+            this.wbAuthorize.Size = new System.Drawing.Size(715, 290);
             this.wbAuthorize.TabIndex = 3;
+            // 
+            // txtURI
+            // 
+            this.txtURI.Location = new System.Drawing.Point(199, 66);
+            this.txtURI.Name = "txtURI";
+            this.txtURI.Size = new System.Drawing.Size(707, 20);
+            this.txtURI.TabIndex = 4;
             // 
             // frmQuizlet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(939, 401);
+            this.Controls.Add(this.txtURI);
             this.Controls.Add(this.wbAuthorize);
             this.Controls.Add(this.btnAuthorize);
             this.Controls.Add(this.comboBox1);
@@ -92,5 +101,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button btnAuthorize;
         private System.Windows.Forms.WebBrowser wbAuthorize;
+        private System.Windows.Forms.TextBox txtURI;
     }
 }

@@ -14,7 +14,7 @@ Updated Requirements
 		a. Dropdown to select User/Password to add list to
 			i. Multiselect for group vocab lists
 		b. Send to Quizlet button
-		c. Copy link text to clipboard to past in email
+		c. Copy link text to clipboard to paste in email
 
 Optional 
 	X - 1. Resize form and Listbox controls
@@ -23,4 +23,7 @@ Optional
 	X - 4. Remove sample sentance from Cambridge definition results
 
 
+	Bob007-007
+	Beht135-
+	http://english4finance.de
 
