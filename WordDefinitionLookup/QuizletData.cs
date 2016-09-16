@@ -32,6 +32,8 @@ namespace WordDefinitionLookup
 
             return QuizletUser;
         }
+
+        public QuizletAuthResponse Authorization { get; set; }
     }
 
     public class QuizletUserobject

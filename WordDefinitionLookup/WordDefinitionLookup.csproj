@@ -73,6 +73,7 @@
     <Compile Include="PearsonWord.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuizletAuthResponse.cs" />
     <Compile Include="QuizletData.cs" />
     <Compile Include="VocabWord.cs" />
     <EmbeddedResource Include="EditForm - Copy.resx">

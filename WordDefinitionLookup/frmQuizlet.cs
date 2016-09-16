@@ -86,16 +86,12 @@ namespace WordDefinitionLookup
             //int Random = new Random().Next(10000);
             Uri QuizletURI = new Uri("https://api.quizlet.com/oauth/token");
 
-
-
-
             //string QuizletSample = "https://quizlet.com/authorize?response_type=code&client_id=MY_CLIENT_ID&scope=read&state=RANDOM_STRING";
 
             //using (var client = new WebClient())
             //{
             //    var response = client.
             //}
-
 
             ////http://stackoverflow.com/questions/15626641/proper-form-of-https-request - example code
             using (var client = new WebClient())
@@ -107,13 +103,22 @@ namespace WordDefinitionLookup
                 string FormatedString = string.Format("grant_type={0}&code={1}&redirect_uri={2}",
             HttpUtility.HtmlEncode("authorization_code"), HttpUtility.HtmlEncode(AuthCode), HttpUtility.HtmlEncode(RedirectUri));
                 client.UploadStringCompleted += ClientOnUploadStringCompleted;
-            client.UploadStringAsync(QuizletURI, "POST", FormatedString);
+               
+                    client.UploadStringAsync(QuizletURI, "POST", FormatedString);
             }
         }
 
         private void ClientOnUploadStringCompleted(object sender, UploadStringCompletedEventArgs e)
         {
-            MessageBox.Show(e.Result);
+            try
+            {
+                Quizlet.Authorization = Newtonsoft.Json.JsonConvert.DeserializeObject<QuizletAuthResponse>(e.Result);
+                txtInfo.Text = Quizlet.Authorization.access_token;
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.ToString());
+            }
         }
 
         private void MakeAPICall()
