@@ -15,14 +15,16 @@ namespace WordDefinitionLookup
             
         }
 
+        public string AuthCode { get; set; }
+
         public QuizletUserobject GetUserInfo()
         {
             QuizletUserobject QuizletUser;
 
             string Endpoint = "https://api.quizlet.com/2.0/users";
             string Parameter = "Bob007-007";
-            string AuthCode = "?access_token=cQcVvgj6AufdKNNrg9VQtFyTTVtGEf9UVxMCgyTZ&whitespace=1";
-            string Request = Endpoint + "/" + Parameter + "/" + AuthCode;
+            //AuthCode = "?access_token=cQcVvgj6AufdKNNrg9VQtFyTTVtGEf9UVxMCgyTZ&whitespace=1";
+            string Request = Endpoint + "/" + Parameter + "/" + this.AuthCode;
             //todo - put in "Using" block
             string Response = new WebClient().DownloadString(Request);
 

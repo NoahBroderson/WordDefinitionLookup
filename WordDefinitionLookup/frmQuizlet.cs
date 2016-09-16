@@ -14,20 +14,21 @@ namespace WordDefinitionLookup
 {
     public partial class frmQuizlet : Form
     {
+        QuizletData Quizlet;
+
         public frmQuizlet()
         {
             InitializeComponent();
+            Quizlet = new QuizletData();
         }
 
         private void frmQuizlet_Load(object sender, EventArgs e)
         {
-            LoadUserListbox();
-
+            //LoadUserListbox();
         }
 
         private void LoadUserListbox()
         {
-            QuizletData Quizlet = new QuizletData();
             QuizletUserobject User = Quizlet.GetUserInfo();
             List<string> UserSets = new List<string>();
 
@@ -35,81 +36,41 @@ namespace WordDefinitionLookup
             {
                 UserSets.Add(User.sets[i].title);
             }
-
             txtInfo.Lines = UserSets.ToArray<string>();
-
         }
 
-        private void testcall2()
+        private void LoadAuthPage()
         {
-            // Initialize the WebRequest.
-            string ClientID = "rxD98NcHqS";
-            //string Secret = "3Cn2GWNX4aZXaCA62FJXRJ";
-            //string MyURL = "http://english4finance.de";
-            int Random = new Random().Next(10000);
+            
+            string ClientIDParam = "rxD98NcHqS";            
+            int ReadStateParam = new Random().Next(10000);
+            string RedirectUriParam = "http://shop.english4finance.de/produkte.html";
 
-
-
-
-            //string QuizletSample = "https://quizlet.com/authorize?response_type=code&client_id=" + ClientID + "&scope=read&state=" + Random.ToString();
             string Endpoint = "https://quizlet.com/authorize";
-            string Parameters = "?response_type=code&client_id=" + ClientID + "&scope=read&state=" + Random.ToString() + "&redirect_uri=http://shop.english4finance.de/produkte.html";
-            //Example URI: https://quizlet.com/authorize?response_type=code&client_id=MY_CLIENT_ID&scope=read&state=RANDOM_STRING
+            string Parameters = "?response_type=code&client_id=" + ClientIDParam + "&scope=read&state=" + ReadStateParam.ToString() + "&redirect_uri=" + RedirectUriParam;
             string Request = Endpoint + "/" + Parameters;
             wbAuthorize.Navigated += OnNavigated;
-            wbAuthorize.Url = new System.Uri(Request);
-            //var myRequest = WebRequest.Create(Request);
-            //myRequest.Method = "HEAD";
-
-
-            // Return the response. 
-            //var myResponse = myRequest.GetResponse();
-            // Code to use the WebResponse goes here.
-            //MessageBox.Show(myResponse.ResponseUri.ToString());
-            //foreach (var item in myResponse.Headers)
-            //{
-            //    MessageBox.Show(item.ToString());
-            //}
-            //// Close the response to free resources.
-            //myResponse.Close();
-
+            wbAuthorize.Url = new System.Uri(Request);         
         }
 
         private void OnNavigated(object sender, WebBrowserNavigatedEventArgs e)
         {
-            //MessageBox.Show(e.Url.AbsoluteUri);
-            txtURI.Text = e.Url.ToString();
+            Quizlet.AuthCode = HttpUtility.ParseQueryString(e.Url.ToString()).Get("code");
+            txtURI.Text = Quizlet.AuthCode;
+            //txtURI.Text = e.Url.ToString();
+            if (Quizlet.AuthCode != null)
+            {
+                wbAuthorize.Visible = false;
+                GetAccessToken();
+            }
+
         }
 
-        private void testcall()
-        {
-           
-                
-                //https://quizlet.com/authorize?response_type=code&client_id=MY_CLIENT_ID&scope=read&state=RANDOM_STRING
 
-                string ClientID = "rxD98NcHqS";
-                //string Secret = "3Cn2GWNX4aZXaCA62FJXRJ";
-                //string MyURL = "http://english4finance.de";
-                int Random = new Random().Next(10000);
-
-
-
-
-            //string QuizletSample = "https://quizlet.com/authorize?response_type=code&client_id=" + ClientID + "&scope=read&state=" + Random.ToString();
-                string Endpoint = "https://api.quizlet.com/2.0/users";
-                string Parameters = "?response_type=code&client_id=" + ClientID + "&scope=read&state=" + Random.ToString();                 
-                string Request = Endpoint + "/"  + Parameters;
-                //todo - put in "Using" block
-                string Response = new WebClient().DownloadString(Request);
-
-
-                txtInfo.Text = Response;
-           
-        }
 
         private void btnAuthorize_Click(object sender, EventArgs e)
         {
-            testcall2();
+            LoadAuthPage();
 
             //GetUserAuth();
             //GetAccessToken();
@@ -117,12 +78,13 @@ namespace WordDefinitionLookup
         }
 
 
-        private void GetUserAuth()
+        private void GetAccessToken()
         {
             //string ClientID = "rxD98NcHqS";
-            //string Secret = "3Cn2GWNX4aZXaCA62FJXRJ";
-            //string MyURL = "http://english4finance.de";
-            int Random = new Random().Next(10000);
+            string AuthCode = Quizlet.AuthCode;
+            string RedirectUri = "http://shop.english4finance.de/produkte.html";
+            //int Random = new Random().Next(10000);
+            Uri QuizletURI = new Uri("https://api.quizlet.com/oauth/token");
 
 
 
@@ -136,18 +98,22 @@ namespace WordDefinitionLookup
 
 
             ////http://stackoverflow.com/questions/15626641/proper-form-of-https-request - example code
-            //using (var client = new WebClient())
-            //{
-            //    client.Headers[HttpRequestHeader.Authorization] = "Basic " + "MY_SECRET_CODE";
-            //    client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-            //    client.Headers[HttpRequestHeader.Host] = "api.quizlet.com";
-            //    client.Headers[HttpRequestHeader.AcceptCharset] = "UTF-8";
-            //    //client.UploadStringCompleted += ClientOnUploadStringCompleted;
-            //    string FormatedString = string.Format("grant_type={0}&code={1}&redirect_uri={2}",
-            //HttpUtility.HtmlEncode("authorization_code"), HttpUtility.HtmlEncode(Secret), HttpUtility.HtmlEncode("http://someurl.com"))
-            //    client.UploadStringAsync(tokenUrl, "POST", string.Format("grant_type={0}&code={1}",
-            //                                           HttpUtility.HtmlEncode("authorization_code"), HttpUtility.HtmlEncode(code)));
-            //}
+            using (var client = new WebClient())
+            {
+                client.Headers[HttpRequestHeader.Authorization] = "Basic " + "cnhEOThOY0hxUzozQ24yR1dOWDRhWlhhQ0E2MkZKWFJK";
+                client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                client.Headers[HttpRequestHeader.Host] = "api.quizlet.com";
+                client.Headers[HttpRequestHeader.AcceptCharset] = "UTF-8";
+                string FormatedString = string.Format("grant_type={0}&code={1}&redirect_uri={2}",
+            HttpUtility.HtmlEncode("authorization_code"), HttpUtility.HtmlEncode(AuthCode), HttpUtility.HtmlEncode(RedirectUri));
+                client.UploadStringCompleted += ClientOnUploadStringCompleted;
+            client.UploadStringAsync(QuizletURI, "POST", FormatedString);
+            }
+        }
+
+        private void ClientOnUploadStringCompleted(object sender, UploadStringCompletedEventArgs e)
+        {
+            MessageBox.Show(e.Result);
         }
 
         private void MakeAPICall()
@@ -155,10 +121,7 @@ namespace WordDefinitionLookup
             throw new NotImplementedException();
         }
 
-        private void GetAccessToken()
-        {
-            throw new NotImplementedException();
-        }
+        
 
     }
 }
