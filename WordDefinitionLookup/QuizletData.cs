@@ -22,9 +22,9 @@ namespace WordDefinitionLookup
             QuizletUserobject QuizletUser;
 
             string Endpoint = "https://api.quizlet.com/2.0/users";
-            string Parameter = "Bob007-007";
-            //AuthCode = "?access_token=cQcVvgj6AufdKNNrg9VQtFyTTVtGEf9UVxMCgyTZ&whitespace=1";
-            string Request = Endpoint + "/" + Parameter + "/" + this.AuthCode;
+            string Parameter = Authorization.user_id;
+            string AccessToken = "?access_token=" + Authorization.access_token + "&whitespace=1";
+            string Request = Endpoint + "/" + Parameter + "/" + AccessToken;
             //todo - put in "Using" block
             string Response = new WebClient().DownloadString(Request);
 

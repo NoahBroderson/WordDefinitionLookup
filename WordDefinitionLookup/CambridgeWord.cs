@@ -6,56 +6,12 @@ namespace WordDefinitionLookup
 {
     public class CambridgeWord : VocabWord
     {
-        //private string lookupWord;
-
-        //public string Word
-        //{
-        //    get { return lookupWord; }
-        //    set
-        //    {
-        //        lookupWord = value;
-        //        GetDefinitions();
-        //    }
-
-        //}
-
-        //private string topDefinition;
-
-        //public string Definition
-        //{
-        //    get { return topDefinition; }
-        //    set { topDefinition = value; }
-        //}
-
-        //private List<string> wordDefinitions;
-
-        //public List<string> Definitions
-        //{
-        //    get { return wordDefinitions; }
-        //}
-
+        
         public CambridgeWord(string word) : base(word)
         {
-            //base.LookupWord = word;
-
-            // Already getting definitions when setting word
-            // GetDefinitions();
+            
         }
-
-        //private void GetDefinitions()
-        //{
-        //    wordDefinitions = this.Lookup();
-
-        //    if (wordDefinitions.Count > 0)
-        //    {
-        //        topDefinition = wordDefinitions[0];
-        //    }
-        //    else
-        //    {
-        //        topDefinition = "No definitions found!";
-        //    }
-        //}
-
+        
         override protected List<string> Lookup(string word)
         {
             wordDefinitions = new List<string>();

@@ -10,27 +10,18 @@ namespace WordDefinitionLookup
     {
         List<VocabWord> VocabList;
 
+
         public frmWordLookup()
         {
-            InitializeComponent();            
+            InitializeComponent(); 
+                       
         }
 
         private void frmWordLookup_Load(object sender, EventArgs e)
         {
-            try
-            {
-                frmQuizlet QuizletForm = new frmQuizlet();
-                QuizletForm.ShowDialog();
-
+                cboDictionary.SelectedIndex = 1;
                 VocabList = new List<VocabWord>();
-                cboDictionary.SelectedIndex = 0;
-            }
-            catch (Exception Error)
-            {
-                MessageBox.Show(Error.Message);
-            }
         }
-
 
         private void lbTopDefinitions_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -281,7 +272,11 @@ namespace WordDefinitionLookup
 
         private void cboDictionary_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RunLookup();
+            if (lbWordList.Items.Count > 0)
+            {
+                RunLookup();
+            }
+
         }
 
 
@@ -302,5 +297,12 @@ namespace WordDefinitionLookup
             }
         }
 
+        private void btnExportToQuizlet_Click(object sender, EventArgs e)
+        {
+            frmQuizletUpload QuizletForm = new frmQuizletUpload();
+            QuizletForm.VocabList = VocabList;
+            QuizletForm.ShowDialog();
+
+        }
     }
 }
