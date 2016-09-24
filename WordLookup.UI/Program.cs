@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WordDefinitionLookup
+namespace WordLookup.UI
 {
     static class Program
     {
@@ -16,8 +16,7 @@ namespace WordDefinitionLookup
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            Application.Run(new frmWordLookup());
+            Application.Run(new Form1());
         }
     }
 }
