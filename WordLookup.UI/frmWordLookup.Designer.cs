@@ -1,4 +1,4 @@
-﻿namespace WordDefinitionLookup
+﻿namespace WordLookup
 {
     partial class frmWordLookup
     {
@@ -156,15 +156,11 @@
             // cboDictionary
             // 
             this.cboDictionary.FormattingEnabled = true;
-            this.cboDictionary.Items.AddRange(new object[] {
-            "Pearson",
-            "Cambridge"});
             this.cboDictionary.Location = new System.Drawing.Point(239, 414);
             this.cboDictionary.Name = "cboDictionary";
             this.cboDictionary.Size = new System.Drawing.Size(157, 21);
             this.cboDictionary.TabIndex = 16;
             this.cboDictionary.SelectedIndexChanged += new System.EventHandler(this.cboDictionary_SelectedIndexChanged);
-            
             // 
             // lblIn
             // 

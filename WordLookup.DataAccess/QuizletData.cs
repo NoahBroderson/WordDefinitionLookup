@@ -1,14 +1,14 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Web.Script.Serialization;
 
-namespace WordDefinitionLookup
+namespace WordLookup
 {
-    class QuizletData
+    public class QuizletData
     {
         public QuizletData()
         {
@@ -17,7 +17,7 @@ namespace WordDefinitionLookup
 
         public string AuthCode { get; set; }
 
-        public QuizletUserobject GetUserInfo()
+        public QuizletUserobject GetQuizletUser()
         {
             QuizletUserobject QuizletUser;
 
@@ -27,8 +27,8 @@ namespace WordDefinitionLookup
             string Request = Endpoint + "/" + Parameter + "/" + AccessToken;
             //todo - put in "Using" block
             string Response = new WebClient().DownloadString(Request);
-
-            QuizletUser = JsonConvert.DeserializeObject<QuizletUserobject>(Response);
+            JavaScriptSerializer Serializer = new JavaScriptSerializer();
+            QuizletUser = Serializer.Deserialize<QuizletUserobject>(Response);
 
             return QuizletUser;
         }

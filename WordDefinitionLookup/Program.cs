@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WordDefinitionLookup
+namespace WordLookup
 {
     static class Program
     {
@@ -17,7 +17,12 @@ namespace WordDefinitionLookup
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new frmWordLookup());
+            // DictionaryFactory.GetAvailableDictionaries()
+            // Read config (reflection) for available dictionaries and pass to WordLookup form
+            // Remove references to specific dictionary projects when DictionaryFactory complete
+            List<IWordDictionary> availableDictionaries = WordLookup.WordDictionaryFactory.GetAvailableDictionaries();
+
+            Application.Run(new frmWordLookup(availableDictionaries));
         }
     }
 }

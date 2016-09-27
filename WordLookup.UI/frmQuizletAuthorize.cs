@@ -12,7 +12,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
-namespace WordDefinitionLookup
+namespace WordLookup
 {
     public partial class frmQuizletAuthorize : Form
     {
@@ -49,7 +49,7 @@ namespace WordDefinitionLookup
 
         private void LoadUserListbox()
         {
-            QuizletUserobject User = Quizlet.GetUserInfo();
+            QuizletUserobject User = Quizlet.GetQuizletUser();
             List<string> UserSets = new List<string>();
 
             for (int i = 0; i < User.sets.Count(); i++)
@@ -61,31 +61,31 @@ namespace WordDefinitionLookup
 
         private void LoadAuthPage()
         {
-            string ClientIDParam = Properties.Settings.Default.ClientID;
-            //string ClientIDParam = "rxD98NcHqS";            
-            int ReadStateParam = new Random().Next(10000);
-            //string RedirectUriParam = "http://shop.english4finance.de/produkte.html";
-            string RedirectUriParam = Properties.Settings.Default.RedirectURI;
+            //string ClientIDParam = Properties.Settings.Default.ClientID;
+            ////string ClientIDParam = "rxD98NcHqS";            
+            //int ReadStateParam = new Random().Next(10000);
+            ////string RedirectUriParam = "http://shop.english4finance.de/produkte.html";
+            //string RedirectUriParam = Properties.Settings.Default.RedirectURI;
 
-            string Endpoint = "https://quizlet.com/authorize";
-            string Parameters = "?response_type=code&client_id=" + ClientIDParam + "&scope=read&state=" + ReadStateParam.ToString() + "&redirect_uri=" + RedirectUriParam;
-            string Request = Endpoint + "/" + Parameters;
-            wbAuthorize.Navigated += OnNavigated;
-            wbAuthorize.Url = new System.Uri(Request);         
+            //string Endpoint = "https://quizlet.com/authorize";
+            //string Parameters = "?response_type=code&client_id=" + ClientIDParam + "&scope=read&state=" + ReadStateParam.ToString() + "&redirect_uri=" + RedirectUriParam;
+            //string Request = Endpoint + "/" + Parameters;
+            //wbAuthorize.Navigated += OnNavigated;
+            //wbAuthorize.Url = new System.Uri(Request);
         }
 
         private void OnNavigated(object sender, WebBrowserNavigatedEventArgs e)
         {
-            Quizlet.AuthCode = HttpUtility.ParseQueryString(e.Url.ToString()).Get("code");
-            txtURI.Text = Quizlet.AuthCode;
-            //txtURI.Text = e.Url.ToString();
-            if (Quizlet.AuthCode != null)
-            {
-                wbAuthorize.Visible = false;
-                GetAccessToken();
-            }
+            //Quizlet.AuthCode = HttpUtility.ParseQueryString(e.Url.ToString()).Get("code");
+            //txtURI.Text = Quizlet.AuthCode;
+            ////txtURI.Text = e.Url.ToString();
+            //if (Quizlet.AuthCode != null)
+            //{
+            //    wbAuthorize.Visible = false;
+            //    GetAccessToken();
+            //}
         }
-        
+
         private void btnAuthorize_Click(object sender, EventArgs e)
         {
             LoadAuthPage();
@@ -115,18 +115,18 @@ namespace WordDefinitionLookup
 
             ////http://stackoverflow.com/questions/15626641/proper-form-of-https-request - example code
 
-            using (var client = new WebClient())
-            {
-                client.Headers[HttpRequestHeader.Authorization] = "Basic " + StaticAuthInfo;
-                client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                client.Headers[HttpRequestHeader.Host] = "api.quizlet.com";
-                client.Headers[HttpRequestHeader.AcceptCharset] = "UTF-8";
-                string FormatedString = string.Format("grant_type={0}&code={1}&redirect_uri={2}",
-            HttpUtility.HtmlEncode("authorization_code"), HttpUtility.HtmlEncode(AuthCode), HttpUtility.HtmlEncode(RedirectUri));
-                client.UploadStringCompleted += ClientOnUploadStringCompleted;
+            //using (var client = new WebClient())
+            //{
+            //    client.Headers[HttpRequestHeader.Authorization] = "Basic " + StaticAuthInfo;
+            //    client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+            //    client.Headers[HttpRequestHeader.Host] = "api.quizlet.com";
+            //    client.Headers[HttpRequestHeader.AcceptCharset] = "UTF-8";
+            //    string FormatedString = string.Format("grant_type={0}&code={1}&redirect_uri={2}",
+            //HttpUtility.HtmlEncode("authorization_code"), HttpUtility.HtmlEncode(AuthCode), HttpUtility.HtmlEncode(RedirectUri));
+            //    client.UploadStringCompleted += ClientOnUploadStringCompleted;
 
-                client.UploadStringAsync(QuizletURI, "POST", FormatedString);
-            }
+            //    client.UploadStringAsync(QuizletURI, "POST", FormatedString);
+            //}
         }
 
         private void ClientOnUploadStringCompleted(object sender, UploadStringCompletedEventArgs e)
@@ -141,7 +141,8 @@ namespace WordDefinitionLookup
                 JavaScriptSerializer Serializer = new JavaScriptSerializer();
                 Quizlet.Authorization = Serializer.Deserialize<QuizletAuthResponse>(e.Result);
                 //txtInfo.Text = Quizlet.Authorization.access_token;
-                MessageBox.Show(string.Format("Access Token: {0} \r\n Expires in: {1} days", Quizlet.Authorization.access_token, ((Quizlet.Authorization.expires_in/60)/60)/24));
+                MessageBox.Show(string.Format("Access Token: {0} \r\n Expires in: {1} days", Quizlet.Authorization.access_token, ((Quizlet.Authorization.expires_in / 60) / 60) / 24));
+
                 //This works too! Using Dictionary object instead of custom object
                 //JavaScriptSerializer Serializer = new JavaScriptSerializer();
                 //Dictionary<string,object> Dictionary = Serializer.Deserialize<Dictionary<string,object>>(e.Result);

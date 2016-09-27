@@ -1,26 +1,24 @@
 ﻿using System;
-using System.Net;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-
-namespace WordDefinitionLookup
+namespace WordLookup
 {
     public partial class frmWordLookup : Form
     {
-        List<VocabWord> VocabList;
+        List<VocabWord> _vocabList = new List<VocabWord>();
+        IWordDictionary _sectedDictionary;
 
-
-        public frmWordLookup()
+        public frmWordLookup(List<IWordDictionary> availableDictionaries)
         {
-            InitializeComponent(); 
-                       
+            InitializeComponent();
+            cboDictionary.DataSource = availableDictionaries;
+            cboDictionary.DisplayMember = "Name";
+            cboDictionary.SelectedIndex = 0;
         }
 
         private void frmWordLookup_Load(object sender, EventArgs e)
         {
-                cboDictionary.SelectedIndex = 1;
-                VocabList = new List<VocabWord>();
         }
 
         private void lbTopDefinitions_SelectedIndexChanged(object sender, EventArgs e)
@@ -38,8 +36,8 @@ namespace WordDefinitionLookup
             catch (Exception Error)
             {
                 MessageBox.Show(Error.Message);
-
-            }        }
+            }
+        }
 
 
         private void lbAltDefinitions_DoubleClick(object sender, EventArgs e)
@@ -64,18 +62,17 @@ namespace WordDefinitionLookup
             try
             {
                 lbTopDefinitions.DataSource = null;
-                lbTopDefinitions.DataSource = VocabList;
+                lbTopDefinitions.Items.Clear();
+                lbTopDefinitions.DataSource = _vocabList;
                 lbTopDefinitions.DisplayMember = "Definition";
-                lbTopDefinitions.ValueMember = "Word";
+                //lbTopDefinitions.ValueMember = "Word";
                 lbTopDefinitions.Refresh();
             }
             catch (Exception Error)
             {
                 MessageBox.Show(Error.Message);
-                throw;
             }
         }
-
 
         private void RefreshWordList()
         {
@@ -83,9 +80,9 @@ namespace WordDefinitionLookup
             {
                 lbWordList.DataSource = null;
                 lbWordList.Items.Clear();
-                lbWordList.DataSource = VocabList;
-                lbWordList.DisplayMember = "Word";
-                lbWordList.ValueMember = "Word";
+                lbWordList.DataSource = _vocabList;
+                //lbWordList.DisplayMember = "Word";
+                //lbWordList.ValueMember = "Word";
                 lbWordList.Refresh();
             }
             catch (Exception Error)
@@ -93,16 +90,15 @@ namespace WordDefinitionLookup
                 MessageBox.Show("Error: {0}", Error.Message);
             }
         }
-       
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            ExportToCSV(VocabList);
+            ExportToCSV(_vocabList);
         }
 
         private void ExportToCSV(List<VocabWord> wordList)
         {
-            string FileName ="";        
+            string FileName = "";
             try
             {
                 var windowsDesktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
@@ -144,6 +140,7 @@ namespace WordDefinitionLookup
 
         private void btnPasteList_Click(object sender, EventArgs e)
         {
+            _vocabList.Clear();
             PasteWordList();
         }
 
@@ -153,17 +150,16 @@ namespace WordDefinitionLookup
             {
                 string clipBoardText = Clipboard.GetText();
                 string[] wordList = clipBoardText.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-                lbWordList.DataSource = null;
-                lbWordList.Items.Clear();
-                lbTopDefinitions.DataSource = null;
-                lbTopDefinitions.Items.Clear();
-                lbAltDefinitions.DataSource = null;
-                lbAltDefinitions.Items.Clear();
+                ClearListBoxes();
 
+                VocabWord _newVocabWord;
                 foreach (string item in wordList)
                 {
-                    lbWordList.Items.Add(item.Replace("- ",""));
+                    _newVocabWord = new VocabWord(item.Replace("- ", ""));
+                    _vocabList.Add(_newVocabWord);
                 }
+                lbWordList.DataSource = _vocabList;
+                lbWordList.Refresh();
 
                 btnLookup.Enabled = true;
                 btnLookup.Focus();
@@ -172,6 +168,16 @@ namespace WordDefinitionLookup
             {
                 MessageBox.Show(string.Format("Error pasting from clipboard. Error message: {0}", Error.Message));
             }
+        }
+
+        private void ClearListBoxes()
+        {
+            lbWordList.DataSource = null;
+            lbWordList.Items.Clear();
+            lbTopDefinitions.DataSource = null;
+            lbTopDefinitions.Items.Clear();
+            lbAltDefinitions.DataSource = null;
+            lbAltDefinitions.Items.Clear();
         }
 
         private void btnLookup_Click(object sender, EventArgs e)
@@ -183,29 +189,15 @@ namespace WordDefinitionLookup
         {
             try
             {
-                VocabWord vocabWord;
                 ClearForm();
-                VocabList.Clear();
-
-                foreach (object word in lbWordList.Items)
+                
+                foreach (var word in _vocabList)
                 {
-                    if (cboDictionary.Text == "Cambridge")
-                    {
-                        vocabWord = new CambridgeWord(word.ToString().ToLower());
-                    }
-                    else
-                    {
-                        vocabWord = new PearsonWord(word.ToString().ToLower());
-                    }
-
-                    if (word.ToString().Length > 0)
-                    {
-                        VocabList.Add(vocabWord);
-                    }
+                    word.Definitions = _sectedDictionary.GetDefinitions(word.ToString().ToLower());
                 }
-
-                RefreshTopDefinitionsList();
                 RefreshWordList();
+                RefreshTopDefinitionsList();
+                
                 btnLookup.Enabled = false;
             }
             catch (Exception Error)
@@ -229,13 +221,13 @@ namespace WordDefinitionLookup
                     RefreshTopDefinitionsList();
                 }
             }
-            catch ( Exception Error)
+            catch (Exception Error)
             {
                 MessageBox.Show(Error.Message);
             }
         }
 
-        
+
         private void frmWordLookup_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.V)
@@ -243,7 +235,7 @@ namespace WordDefinitionLookup
                 PasteWordList();
             }
         }
-        
+
 
         private void lbWordList_KeyDown(object sender, KeyEventArgs e)
         {
@@ -253,7 +245,7 @@ namespace WordDefinitionLookup
                 {
                     if (lbWordList.DataSource != null)
                     {
-                        this.VocabList.Remove((CambridgeWord)lbWordList.SelectedItem);
+                        this._vocabList.Remove((VocabWord)lbWordList.SelectedItem);
                         RefreshTopDefinitionsList();
                         RefreshWordList();
                     }
@@ -272,13 +264,14 @@ namespace WordDefinitionLookup
 
         private void cboDictionary_SelectedIndexChanged(object sender, EventArgs e)
         {
+            _sectedDictionary = (IWordDictionary)cboDictionary.SelectedItem;
+
             if (lbWordList.Items.Count > 0)
             {
                 RunLookup();
             }
 
         }
-
 
         private void ClearForm()
         {
@@ -300,7 +293,7 @@ namespace WordDefinitionLookup
         private void btnExportToQuizlet_Click(object sender, EventArgs e)
         {
             frmQuizletUpload QuizletForm = new frmQuizletUpload();
-            QuizletForm.VocabList = VocabList;
+            QuizletForm.VocabList = _vocabList;
             QuizletForm.ShowDialog();
 
         }

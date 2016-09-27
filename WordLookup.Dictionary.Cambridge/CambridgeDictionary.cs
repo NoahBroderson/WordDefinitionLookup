@@ -1,34 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WordDefinitionLookup
+namespace WordLookup
 {
-    public class CambridgeWord : VocabWord
+    public class CambridgeDictionary : IWordDictionary
     {
-        
-        public CambridgeWord(string word) : base(word)
+        public string Name
         {
-            
+            get
+            {
+                return "Cambridge";
+            }            
         }
-        
-        override protected List<string> Lookup(string word)
+
+        List<string> _Definitions;
+
+        public List<string> GetDefinitions(string word)
         {
-            wordDefinitions = new List<string>();
+            _Definitions = new List<string>();
             string lookupHTML;
 
             try
             {
-                lookupHTML = GetHTML(word.ToLower());
-                wordDefinitions = GetDefinitions(lookupHTML);
+                lookupHTML = GetHTML(word);
+                _Definitions = ExtractDefinitions(lookupHTML);
 
-                return wordDefinitions;
+                return _Definitions;
             }
             catch (Exception error)
             {
-                wordDefinitions.Clear();
-                wordDefinitions.Add(string.Format("Error during lookup of definition. {0}", error.Message));
-                return wordDefinitions;
+                _Definitions.Clear();
+                _Definitions.Add(string.Format("Error during lookup of definition. {0}", error.Message));
+                return _Definitions;
             }
         }
 
@@ -36,7 +43,7 @@ namespace WordDefinitionLookup
         {
             try
             {
-                string pageSource = new WebClient().DownloadString("http://dictionary.cambridge.org/dictionary/english/" + lookupWord.ToLower().Replace(" ", "-"));
+                string pageSource = new WebClient().DownloadString("http://dictionary.cambridge.org/dictionary/english/" + lookupWord.ToString().ToLower().Replace(" ", "-"));
 
                 return pageSource;
             }
@@ -47,7 +54,7 @@ namespace WordDefinitionLookup
 
         }
 
-        private List<string> GetDefinitions(string lookupHTML)
+        private List<string> ExtractDefinitions(string lookupHTML)
         {
             int processingPoint = 0;
             //int nextGuideWord = lookupHTML.IndexOf("<span class=\"guideword\"", processingPoint);
@@ -89,7 +96,7 @@ namespace WordDefinitionLookup
 
                     nextGuideWord = lookupHTML.IndexOf("<span class=\"def-info\">", processingPoint);
                     nextDefinition = lookupHTML.IndexOf("<b class=\"def", processingPoint);
-                                        
+
                 } while (processingPoint < nextDefinition);
             }
             finally

@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net;
-using Newtonsoft.Json;
-using System.IO;
+using System.Web.Script.Serialization;
 
-namespace WordDefinitionLookup
+namespace WordLookup
 {
-    class PearsonWord : VocabWord
+    public class PearsonDictionary : IWordDictionary
     {
-        public PearsonWord(string word) : base(word)
+
+        public string Name
         {
-                
+            get
+            {
+                return "Pearson";
+            }
         }
 
-        protected override List<string> Lookup(string word)
+        public List<string> GetDefinitions(string word)
         {
             List<string> DefinitionList = new List<string>();
 
             string RequestString = string.Format("https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword.exact={0}&offset=0", word);
             string JsonReply = new WebClient().DownloadString(RequestString);
+            JavaScriptSerializer Serializer = new JavaScriptSerializer();
+            PearsonJsonResponse ResponseObject = Serializer.Deserialize<PearsonJsonResponse>(JsonReply);
 
-            PearsonJsonResponse ResponseObject = JsonConvert.DeserializeObject<PearsonJsonResponse>(JsonReply);
-            
             foreach (var item in ResponseObject.results)
             {
 
@@ -37,14 +40,12 @@ namespace WordDefinitionLookup
                             DefinitionList.Add(definition);
                         }
                     }
-                    
+
                 }
             }
-            
+
             return DefinitionList;
         }
 
-    
     }
-    
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WordDefinitionLookup
+namespace WordLookup
 {
-    class QuizletAuthResponse
+    public class QuizletAuthResponse
     {    
         public string access_token { get; set; }
         public string token_type { get; set; }

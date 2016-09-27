@@ -5,67 +5,66 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WordDefinitionLookup
-{
+namespace WordLookup
+{ 
+
     public class VocabWord
     {
+
         public VocabWord(string word)
         {
-            LookupWord = word;
-            GetDefinitions();
+            _lookupWord = word;
+            _definitions = new List<string>();
         }
 
-        protected string LookupWord;
+        private string _lookupWord;
 
         public string Word
         {
-            get { return LookupWord; }
-            set
-            {
-                LookupWord = value;
-                GetDefinitions();
-            }
+            get { return _lookupWord; }
+            set { _lookupWord = value; }
         }
+        
+        private string _definition;
 
         public string Definition
         {
-            get;
-            set;
+            get
+            {
+                if (_definition == null)
+                {
+                    return "Not Defined";
+                }
+                else
+                {
+                    return _definition;
+                }
+            }
+
+            set { _definition = value; }
         }
 
-
-        protected List<string> wordDefinitions;
+        private List<string> _definitions;
 
         public List<string> Definitions
         {
-            get { return wordDefinitions; }
+            get
+            {
+                return _definitions;
+            }
+            set
+            {
+                _definitions = value;
+                _definition = _definitions[0];
+            }
         }
 
         public override String ToString()
         {
-            return this.Word;
+            return _lookupWord;
         }
 
-        private void GetDefinitions()
-        {
-            wordDefinitions = Lookup(this.Word);
-
-            if (wordDefinitions.Count > 0)
-            {
-                Definition = wordDefinitions[0];
-            }
-            else
-            {
-                Definition = "No definitions found!";
-        }
-        }
-
-        protected virtual List<string> Lookup(string word)
-        {
-            wordDefinitions = new List<string>();
-
-            return wordDefinitions;
-        }
+        
     }
 
 }

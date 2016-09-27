@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WordDefinitionLookup
+namespace WordLookup
 {
     public partial class frmEdit : Form
     {

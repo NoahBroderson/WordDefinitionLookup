@@ -1,4 +1,4 @@
-﻿namespace WordDefinitionLookup
+﻿namespace WordLookup
 {
     partial class frmQuizletUpload
     {
