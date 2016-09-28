@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WordLookup.Export.Quizlet
+namespace WordLookup
 {
     static class Program
     {
@@ -16,7 +16,10 @@ namespace WordLookup.Export.Quizlet
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmQuizletUpload());
+            
+
+            Application.Run();
+            
         }
     }
 }

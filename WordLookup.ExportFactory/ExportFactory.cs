@@ -10,7 +10,7 @@ namespace WordLookup
     {
         public static List<IExport> GetAvailableExports()
         {
-            List<IExport> availableExports = new List<IExport> { new ExportCSV() };
+            List<IExport> availableExports = new List<IExport> { new ExportCSV(), new ExportQuizlet() };
 
             return availableExports;
         }

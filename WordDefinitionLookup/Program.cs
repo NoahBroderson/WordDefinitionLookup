@@ -22,6 +22,7 @@ namespace WordLookup
             List<IExport> availableExports = WordLookup.ExportFactory.GetAvailableExports();
 
             Application.Run(new frmWordLookup(availableDictionaries,availableExports));
+            
         }
     }
 }

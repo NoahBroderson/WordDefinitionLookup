@@ -52,6 +52,10 @@
       <Project>{40c9919c-8da3-4490-8c7c-4a05a7f22341}</Project>
       <Name>WordLookup.Export.CSV</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WordLookup.Export.Quizlet\WordLookup.Export.Quizlet.csproj">
+      <Project>{17188245-f439-4ae9-a3dc-bcdb4a000f8f}</Project>
+      <Name>WordLookup.Export.Quizlet</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
