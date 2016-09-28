@@ -23,7 +23,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordLookup.Dictionary.Cambr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordLookup.DictionaryFactory", "WordLookup.DictionaryFactory\WordLookup.DictionaryFactory.csproj", "{7331FCCB-FFF7-4E10-9B6D-409960060264}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordLookup.UnitTests", "WordLookup.UnitTests\WordLookup.UnitTests.csproj", "{5B403DF6-C0ED-4B29-92E5-206A000E5684}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocabWord.Tests", "WordLookup.UnitTests\VocabWord.Tests.csproj", "{5B403DF6-C0ED-4B29-92E5-206A000E5684}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{D13AA8AE-0A52-4073-946C-4E0247FDE602}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,5 +68,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5B403DF6-C0ED-4B29-92E5-206A000E5684} = {D13AA8AE-0A52-4073-946C-4E0247FDE602}
 	EndGlobalSection
 EndGlobal

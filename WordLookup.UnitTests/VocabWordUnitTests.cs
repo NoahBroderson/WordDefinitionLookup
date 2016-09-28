@@ -1,29 +1,55 @@
-﻿using System;
+﻿using WordLookup;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace WordLookup.Tests
+{
+    [TestClass()]
+    public class VocabWordUnitTests
+    {
+        [TestMethod()]
+        public void VocabWord_ConstructorSetsWordProperty()
+        {
+            //Arrange
+            string constructorWord = "test";
+            
+            //Action
+            VocabWord testWord = new VocabWord(constructorWord);
+            string outputWord = testWord.Word;
+
+            //Assert
+            Assert.AreEqual(constructorWord,outputWord);
+        }
+
+        [TestMethod()]
+        public void WordTest1()
+        {
+            Assert.Fail();
+        }
+    }
+}
 
 namespace WordLookup.UnitTests
 {
     [TestClass]
     public class VocabWordTests
     {
+        
         [TestMethod]
-        public void ReturnsWordProperty()
+        public void VocabWord_DefaultDefinitionReturned()
         {
-            WordLookup.VocabWord TestWord = new VocabWord("TestName");
+            //Arrange
+            string constructorWord = "TestName";
+            string output = "Not Defined";
+            //Act
+            var TestWord = new VocabWord(constructorWord);
 
-            Assert.AreEqual("TestName", TestWord.Word);
+            //Assert
+            Assert.AreEqual(output, TestWord.Definition);
         }
 
         [TestMethod]
-        public void ReturnsDefaultDefinition()
-        {
-            var TestWord = new VocabWord("TestName");
-
-            Assert.AreEqual("Not Defined", TestWord.Definition);
-        }
-
-        [TestMethod]
-        public void DefaultDefinitionListHasZeroCount()
+        public void VocabWord_DefaultDefinitionListHasZeroCount()
         {
             var TestWord = new VocabWord("TestName");
 

@@ -80,9 +80,7 @@ namespace WordLookup
             {
                 lbWordList.DataSource = null;
                 lbWordList.Items.Clear();
-                lbWordList.DataSource = _vocabList;
-                //lbWordList.DisplayMember = "Word";
-                //lbWordList.ValueMember = "Word";
+                lbWordList.DataSource = _vocabList;                
                 lbWordList.Refresh();
             }
             catch (Exception Error)

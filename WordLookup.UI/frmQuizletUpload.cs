@@ -19,18 +19,10 @@ namespace WordLookup
             InitializeComponent();
         }
 
-        private void cboUploadType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            lblSets.Visible = Convert.ToBoolean(cboUploadType.SelectedIndex);
-            lbSets.Visible = Convert.ToBoolean(cboUploadType.SelectedIndex);
-
-            txtNewSet.Visible = !Convert.ToBoolean(cboUploadType.SelectedIndex);
-            lblNewSet.Visible = !Convert.ToBoolean(cboUploadType.SelectedIndex);
-        }
 
         private void frmQuizletUpload_Load(object sender, EventArgs e)
         {
-            cboUploadType.SelectedIndex = 0;
+            cboUploadType.SelectedIndex = 1;
 
             foreach (var word in VocabList)
             {
@@ -42,7 +34,9 @@ namespace WordLookup
 
         private void ConnectToQuizlet()
         {
-            throw new NotImplementedException();
+// Read user info from configuration
+// If not valid connection info - Load Autorization form & save config
+// Load Available sets
         }
 
         private void btnUpload_Click(object sender, EventArgs e)
@@ -51,6 +45,16 @@ namespace WordLookup
             {
 
             }
+        }
+
+        private void cboUploadType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //ToDo - Refactor to make more flexible and comprehensible
+            lblSets.Visible = Convert.ToBoolean(cboUploadType.SelectedIndex);
+            lbSets.Visible = Convert.ToBoolean(cboUploadType.SelectedIndex);
+
+            txtNewSet.Visible = !Convert.ToBoolean(cboUploadType.SelectedIndex);
+            lblNewSet.Visible = !Convert.ToBoolean(cboUploadType.SelectedIndex);
         }
     }
 }
