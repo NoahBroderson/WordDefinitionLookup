@@ -98,6 +98,18 @@
       <Project>{7331fccb-fff7-4e10-9b6d-409960060264}</Project>
       <Name>WordLookup.DictionaryFactory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WordLookup.Export.CSV\WordLookup.Export.CSV.csproj">
+      <Project>{40c9919c-8da3-4490-8c7c-4a05a7f22341}</Project>
+      <Name>WordLookup.Export.CSV</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WordLookup.Export.Quizlet\WordLookup.Export.Quizlet.csproj">
+      <Project>{17188245-f439-4ae9-a3dc-bcdb4a000f8f}</Project>
+      <Name>WordLookup.Export.Quizlet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WordLookup.ExportFactory\WordLookup.ExportFactory.csproj">
+      <Project>{a38ff675-fb99-4ad2-b77a-18f9b297091e}</Project>
+      <Name>WordLookup.ExportFactory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WordLookup.UI\WordLookup.UI.csproj">
       <Project>{1f162e16-51e2-44d7-8438-373202e5b223}</Project>
       <Name>WordLookup.UI</Name>

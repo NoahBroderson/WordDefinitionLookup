@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
@@ -101,8 +94,8 @@ namespace WordLookup
             string AuthCode = Quizlet.AuthCode;
             //StaticAuthInfo is - client ID and secret (see the API dashboard). This is simply your client ID and password 
             //    separated by a colon(:) and base64-encoded.
-            string StaticAuthInfo = "cnhEOThOY0hxUzozQ24yR1dOWDRhWlhhQ0E2MkZKWFJK";
-            string RedirectUri = "http://shop.english4finance.de/produkte.html";
+            //string StaticAuthInfo = "cnhEOThOY0hxUzozQ24yR1dOWDRhWlhhQ0E2MkZKWFJK";
+            //string RedirectUri = "http://shop.english4finance.de/produkte.html";
             //int Random = new Random().Next(10000);
             Uri QuizletURI = new Uri("https://api.quizlet.com/oauth/token");
 

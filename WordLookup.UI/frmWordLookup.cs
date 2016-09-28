@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using WordLookup;
 
 namespace WordLookup
 {
@@ -9,12 +10,16 @@ namespace WordLookup
         List<VocabWord> _vocabList = new List<VocabWord>();
         IWordDictionary _sectedDictionary;
 
-        public frmWordLookup(List<IWordDictionary> availableDictionaries)
+        public frmWordLookup(List<IWordDictionary> availableDictionaries, List<IExport> availableExports)
         {
             InitializeComponent();
             cboDictionary.DataSource = availableDictionaries;
             cboDictionary.DisplayMember = "Name";
             cboDictionary.SelectedIndex = 0;
+
+            cboExportTo.DataSource = availableExports;
+            cboExportTo.DisplayMember = "Name";
+            cboExportTo.SelectedIndex = 0;
         }
 
         private void frmWordLookup_Load(object sender, EventArgs e)
@@ -91,33 +96,10 @@ namespace WordLookup
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            ExportToCSV(_vocabList);
-        }
 
-        private void ExportToCSV(List<VocabWord> wordList)
-        {
-            string FileName = "";
-            try
-            {
-                var windowsDesktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-                string currentTime = string.Format("text-{0:yyyy-MM-dd_hh-mm-ss}", DateTime.Now);
-                FileName = System.IO.Path.Combine(windowsDesktop, string.Format("VocabWordsExport_{0}.csv", currentTime));
+            IExport Export = new ExportCSV();
 
-                string fullExport = "";
-
-                foreach (VocabWord vocabWord in wordList)
-                {
-                    fullExport += string.Format("{0};{1}{2}", vocabWord.Word, vocabWord.Definition, Environment.NewLine);
-                }
-
-                System.IO.File.WriteAllText(FileName, fullExport);
-                System.Diagnostics.Process.Start(FileName);
-
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(string.Format("Error saving export file {0}. Error message: {1}", FileName, error.Message));
-            }
+            Export.Export(_vocabList);
         }
 
         private void lbTopDefinitions_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -290,9 +272,9 @@ namespace WordLookup
 
         private void btnExportToQuizlet_Click(object sender, EventArgs e)
         {
-            frmQuizletUpload QuizletForm = new frmQuizletUpload();
-            QuizletForm.VocabList = _vocabList;
-            QuizletForm.ShowDialog();
+            //frmQuizletUpload QuizletForm = new frmQuizletUpload();
+            //QuizletForm.VocabList = _vocabList;
+            //QuizletForm.ShowDialog();
 
         }
     }

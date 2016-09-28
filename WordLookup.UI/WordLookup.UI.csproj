@@ -98,9 +98,9 @@
       <Project>{F1FE62F6-5DF7-4E7B-BEE4-45E00FBD4A32}</Project>
       <Name>WordLookup.Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WordLookup.DataAccess\WordLookup.QuizletDataAccess.csproj">
-      <Project>{ea52a987-0b21-4a10-b8ad-e45b21f2b3a7}</Project>
-      <Name>WordLookup.QuizletDataAccess</Name>
+    <ProjectReference Include="..\WordLookup.Export.CSV\WordLookup.Export.CSV.csproj">
+      <Project>{40c9919c-8da3-4490-8c7c-4a05a7f22341}</Project>
+      <Name>WordLookup.Export.CSV</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

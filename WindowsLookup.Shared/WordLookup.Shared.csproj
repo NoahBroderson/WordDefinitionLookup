@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IExport.cs" />
+    <Compile Include="IExportFactory.cs" />
     <Compile Include="IWordDictionaryFactory.cs" />
     <Compile Include="IWordDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

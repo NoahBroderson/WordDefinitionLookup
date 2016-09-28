@@ -40,6 +40,8 @@
             this.cboDictionary = new System.Windows.Forms.ComboBox();
             this.lblIn = new System.Windows.Forms.Label();
             this.btnExportToQuizlet = new System.Windows.Forms.Button();
+            this.cboExportTo = new System.Windows.Forms.ComboBox();
+            this.lblExportTo = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblTopDefs
@@ -85,7 +87,7 @@
             // btnExportToExcel
             // 
             this.btnExportToExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnExportToExcel.Location = new System.Drawing.Point(620, 412);
+            this.btnExportToExcel.Location = new System.Drawing.Point(593, 470);
             this.btnExportToExcel.Name = "btnExportToExcel";
             this.btnExportToExcel.Size = new System.Drawing.Size(120, 23);
             this.btnExportToExcel.TabIndex = 10;
@@ -165,7 +167,7 @@
             // lblIn
             // 
             this.lblIn.AutoSize = true;
-            this.lblIn.Location = new System.Drawing.Point(203, 417);
+            this.lblIn.Location = new System.Drawing.Point(202, 417);
             this.lblIn.Name = "lblIn";
             this.lblIn.Size = new System.Drawing.Size(37, 13);
             this.lblIn.TabIndex = 17;
@@ -173,7 +175,7 @@
             // 
             // btnExportToQuizlet
             // 
-            this.btnExportToQuizlet.Location = new System.Drawing.Point(620, 441);
+            this.btnExportToQuizlet.Location = new System.Drawing.Point(828, 483);
             this.btnExportToQuizlet.Name = "btnExportToQuizlet";
             this.btnExportToQuizlet.Size = new System.Drawing.Size(120, 23);
             this.btnExportToQuizlet.TabIndex = 18;
@@ -181,11 +183,30 @@
             this.btnExportToQuizlet.UseVisualStyleBackColor = true;
             this.btnExportToQuizlet.Click += new System.EventHandler(this.btnExportToQuizlet_Click);
             // 
+            // cboExportTo
+            // 
+            this.cboExportTo.FormattingEnabled = true;
+            this.cboExportTo.Location = new System.Drawing.Point(574, 414);
+            this.cboExportTo.Name = "cboExportTo";
+            this.cboExportTo.Size = new System.Drawing.Size(121, 21);
+            this.cboExportTo.TabIndex = 19;
+            // 
+            // lblExportTo
+            // 
+            this.lblExportTo.AutoSize = true;
+            this.lblExportTo.Location = new System.Drawing.Point(515, 417);
+            this.lblExportTo.Name = "lblExportTo";
+            this.lblExportTo.Size = new System.Drawing.Size(56, 13);
+            this.lblExportTo.TabIndex = 20;
+            this.lblExportTo.Text = "Export To:";
+            // 
             // frmWordLookup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1244, 528);
+            this.Controls.Add(this.lblExportTo);
+            this.Controls.Add(this.cboExportTo);
             this.Controls.Add(this.btnExportToQuizlet);
             this.Controls.Add(this.lblIn);
             this.Controls.Add(this.cboDictionary);
@@ -222,6 +243,8 @@
         private System.Windows.Forms.ComboBox cboDictionary;
         private System.Windows.Forms.Label lblIn;
         private System.Windows.Forms.Button btnExportToQuizlet;
+        private System.Windows.Forms.ComboBox cboExportTo;
+        private System.Windows.Forms.Label lblExportTo;
     }
 }
 

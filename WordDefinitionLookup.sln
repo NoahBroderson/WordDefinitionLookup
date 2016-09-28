@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordLookup.UI", "WordLookup
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordLookup.Shared", "WindowsLookup.Shared\WordLookup.Shared.csproj", "{F1FE62F6-5DF7-4E7B-BEE4-45E00FBD4A32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordLookup.QuizletDataAccess", "WordLookup.DataAccess\WordLookup.QuizletDataAccess.csproj", "{EA52A987-0B21-4A10-B8AD-E45B21F2B3A7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordLookup.Dictionary.Pearson", "WordLookup.Dictionary.Pearson\WordLookup.Dictionary.Pearson.csproj", "{7A65C9B2-2899-4977-8721-05065AD02F93}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordLookup.Dictionary.Cambridge", "WordLookup.Dictionary.Cambridge\WordLookup.Dictionary.Cambridge.csproj", "{E91B59CE-05AD-4386-9A5D-C4296DD43888}"
@@ -30,6 +28,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordLookup.Export.Quizlet", "WordLookup.Export.Quizlet\WordLookup.Export.Quizlet.csproj", "{17188245-F439-4AE9-A3DC-BCDB4A000F8F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordLookup.Export.CSV", "WordLookup.Export.CSV\WordLookup.Export.CSV.csproj", "{40C9919C-8DA3-4490-8C7C-4A05A7F22341}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordLookup.ExportFactory", "WordLookup.ExportFactory\WordLookup.ExportFactory.csproj", "{A38FF675-FB99-4AD2-B77A-18F9B297091E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +49,6 @@ Global
 		{F1FE62F6-5DF7-4E7B-BEE4-45E00FBD4A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1FE62F6-5DF7-4E7B-BEE4-45E00FBD4A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1FE62F6-5DF7-4E7B-BEE4-45E00FBD4A32}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA52A987-0B21-4A10-B8AD-E45B21F2B3A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA52A987-0B21-4A10-B8AD-E45B21F2B3A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA52A987-0B21-4A10-B8AD-E45B21F2B3A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA52A987-0B21-4A10-B8AD-E45B21F2B3A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7A65C9B2-2899-4977-8721-05065AD02F93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7A65C9B2-2899-4977-8721-05065AD02F93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A65C9B2-2899-4977-8721-05065AD02F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,6 +73,10 @@ Global
 		{40C9919C-8DA3-4490-8C7C-4A05A7F22341}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40C9919C-8DA3-4490-8C7C-4A05A7F22341}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40C9919C-8DA3-4490-8C7C-4A05A7F22341}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A38FF675-FB99-4AD2-B77A-18F9B297091E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A38FF675-FB99-4AD2-B77A-18F9B297091E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A38FF675-FB99-4AD2-B77A-18F9B297091E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A38FF675-FB99-4AD2-B77A-18F9B297091E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

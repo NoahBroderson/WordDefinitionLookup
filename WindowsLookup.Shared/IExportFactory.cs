@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WordLookup.Export.CSV
+namespace WordLookup
 {
-    public class Class1
+public interface IExportFactory
     {
+        List<IExport> GetAvailableExports();
     }
 }

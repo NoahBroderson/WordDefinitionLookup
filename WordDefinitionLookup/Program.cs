@@ -19,8 +19,9 @@ namespace WordLookup
 
             // Remove references to specific dictionary projects when DictionaryFactory complete
             List<IWordDictionary> availableDictionaries = WordLookup.WordDictionaryFactory.GetAvailableDictionaries();
-            
-            Application.Run(new frmWordLookup(availableDictionaries));
+            List<IExport> availableExports = WordLookup.ExportFactory.GetAvailableExports();
+
+            Application.Run(new frmWordLookup(availableDictionaries,availableExports));
         }
     }
 }
