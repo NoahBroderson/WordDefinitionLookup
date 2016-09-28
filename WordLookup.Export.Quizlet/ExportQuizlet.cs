@@ -18,7 +18,7 @@ namespace WordLookup
 
         public void Export(List<VocabWord> vocabWordList)
         {
-            System.Windows.Forms.Form ExportForm = new frmQuizletUpload();
+            System.Windows.Forms.Form ExportForm = new frmQuizletUpload(vocabWordList);
             ExportForm.Visible = true;
             ExportForm.Show();
         }

@@ -14,9 +14,10 @@ namespace WordLookup
     {
         public List<VocabWord> VocabList;
 
-        public frmQuizletUpload()
+        public frmQuizletUpload(List<VocabWord> vocabWordList)
         {
             InitializeComponent();
+            VocabList = vocabWordList;
         }
 
 
