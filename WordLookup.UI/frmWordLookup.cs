@@ -96,10 +96,7 @@ namespace WordLookup
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-
-            //IExport Export = new ExportCSV();
-            IExport Export = new ExportQuizlet();
-
+            IExport Export = (IExport)cboExportTo.SelectedItem;
             Export.Export(_vocabList);
         }
 

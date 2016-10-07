@@ -31,7 +31,7 @@
             this.lblTopDefs = new System.Windows.Forms.Label();
             this.lblAltDefinitions = new System.Windows.Forms.Label();
             this.lbTopDefinitions = new System.Windows.Forms.ListBox();
-            this.btnExportToExcel = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
             this.lbAltDefinitions = new System.Windows.Forms.ListBox();
             this.btnPasteList = new System.Windows.Forms.Button();
             this.lbWordList = new System.Windows.Forms.ListBox();
@@ -39,7 +39,6 @@
             this.btnLookup = new System.Windows.Forms.Button();
             this.cboDictionary = new System.Windows.Forms.ComboBox();
             this.lblIn = new System.Windows.Forms.Label();
-            this.btnExportToQuizlet = new System.Windows.Forms.Button();
             this.cboExportTo = new System.Windows.Forms.ComboBox();
             this.lblExportTo = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -84,16 +83,16 @@
             this.lbTopDefinitions.SelectedIndexChanged += new System.EventHandler(this.lbTopDefinitions_SelectedIndexChanged);
             this.lbTopDefinitions.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbTopDefinitions_MouseDoubleClick);
             // 
-            // btnExportToExcel
+            // btnExport
             // 
-            this.btnExportToExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnExportToExcel.Location = new System.Drawing.Point(593, 470);
-            this.btnExportToExcel.Name = "btnExportToExcel";
-            this.btnExportToExcel.Size = new System.Drawing.Size(120, 23);
-            this.btnExportToExcel.TabIndex = 10;
-            this.btnExportToExcel.Text = "Export To Excel";
-            this.btnExportToExcel.UseVisualStyleBackColor = true;
-            this.btnExportToExcel.Click += new System.EventHandler(this.btnExport_Click);
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnExport.Location = new System.Drawing.Point(575, 441);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(120, 23);
+            this.btnExport.TabIndex = 10;
+            this.btnExport.Text = "Export";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // lbAltDefinitions
             // 
@@ -173,16 +172,6 @@
             this.lblIn.TabIndex = 17;
             this.lblIn.Text = "Using:";
             // 
-            // btnExportToQuizlet
-            // 
-            this.btnExportToQuizlet.Location = new System.Drawing.Point(828, 483);
-            this.btnExportToQuizlet.Name = "btnExportToQuizlet";
-            this.btnExportToQuizlet.Size = new System.Drawing.Size(120, 23);
-            this.btnExportToQuizlet.TabIndex = 18;
-            this.btnExportToQuizlet.Text = "Export To Quizlet";
-            this.btnExportToQuizlet.UseVisualStyleBackColor = true;
-            this.btnExportToQuizlet.Click += new System.EventHandler(this.btnExportToQuizlet_Click);
-            // 
             // cboExportTo
             // 
             this.cboExportTo.FormattingEnabled = true;
@@ -207,7 +196,6 @@
             this.ClientSize = new System.Drawing.Size(1244, 528);
             this.Controls.Add(this.lblExportTo);
             this.Controls.Add(this.cboExportTo);
-            this.Controls.Add(this.btnExportToQuizlet);
             this.Controls.Add(this.lblIn);
             this.Controls.Add(this.cboDictionary);
             this.Controls.Add(this.btnLookup);
@@ -215,7 +203,7 @@
             this.Controls.Add(this.lbWordList);
             this.Controls.Add(this.lblWordList);
             this.Controls.Add(this.lbAltDefinitions);
-            this.Controls.Add(this.btnExportToExcel);
+            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.lbTopDefinitions);
             this.Controls.Add(this.lblAltDefinitions);
             this.Controls.Add(this.lblTopDefs);
@@ -234,7 +222,7 @@
         private System.Windows.Forms.Label lblTopDefs;
         private System.Windows.Forms.Label lblAltDefinitions;
         private System.Windows.Forms.ListBox lbTopDefinitions;
-        private System.Windows.Forms.Button btnExportToExcel;
+        private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.ListBox lbAltDefinitions;
         private System.Windows.Forms.Button btnPasteList;
         private System.Windows.Forms.ListBox lbWordList;
@@ -242,7 +230,6 @@
         private System.Windows.Forms.Button btnLookup;
         private System.Windows.Forms.ComboBox cboDictionary;
         private System.Windows.Forms.Label lblIn;
-        private System.Windows.Forms.Button btnExportToQuizlet;
         private System.Windows.Forms.ComboBox cboExportTo;
         private System.Windows.Forms.Label lblExportTo;
     }

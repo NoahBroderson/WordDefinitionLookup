@@ -8,35 +8,7 @@ using System.Web.Script.Serialization;
 
 namespace WordLookup
 {
-    public class QuizletData
-    {
-        public QuizletData()
-        {
-            
-        }
-
-        public string AuthCode { get; set; }
-
-        public QuizletUserobject GetQuizletUser()
-        {
-            QuizletUserobject QuizletUser;
-
-            string Endpoint = "https://api.quizlet.com/2.0/users";
-            string Parameter = Authorization.user_id;
-            string AccessToken = "?access_token=" + Authorization.access_token + "&whitespace=1";
-            string Request = Endpoint + "/" + Parameter + "/" + AccessToken;
-            //todo - put in "Using" block
-            string Response = new WebClient().DownloadString(Request);
-            JavaScriptSerializer Serializer = new JavaScriptSerializer();
-            QuizletUser = Serializer.Deserialize<QuizletUserobject>(Response);
-
-            return QuizletUser;
-        }
-
-        public QuizletAuthResponse Authorization { get; set; }
-    }
-
-    public class QuizletUserobject
+    public class QuizletUser
     {
         public string username { get; set; }
         public string account_type { get; set; }

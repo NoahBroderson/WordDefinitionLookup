@@ -16,9 +16,11 @@ namespace WordLookup
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
 
-            Application.Run();
+
+            List<VocabWord> vocabWordList = new List<VocabWord> { new VocabWord("test") };
+            Application.Run(new frmQuizletUpload(vocabWordList));
+            //Application.Run(new frmQuizletAuthorize());
             
         }
     }

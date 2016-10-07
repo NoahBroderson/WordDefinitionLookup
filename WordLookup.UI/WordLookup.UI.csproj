@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1F162E16-51E2-44D7-8438-373202E5B223}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WordLookup</RootNamespace>
     <AssemblyName>WordLookup.UI</AssemblyName>
@@ -83,6 +83,7 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -91,20 +92,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WindowsLookup.Shared\WordLookup.Shared.csproj">
       <Project>{F1FE62F6-5DF7-4E7B-BEE4-45E00FBD4A32}</Project>
       <Name>WordLookup.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WordLookup.Export.CSV\WordLookup.Export.CSV.csproj">
-      <Project>{40c9919c-8da3-4490-8c7c-4a05a7f22341}</Project>
-      <Name>WordLookup.Export.CSV</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WordLookup.Export.Quizlet\WordLookup.Export.Quizlet.csproj">
-      <Project>{17188245-f439-4ae9-a3dc-bcdb4a000f8f}</Project>
-      <Name>WordLookup.Export.Quizlet</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

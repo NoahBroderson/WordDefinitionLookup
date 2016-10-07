@@ -43,7 +43,7 @@
             // lbVocabList
             // 
             this.lbVocabList.FormattingEnabled = true;
-            this.lbVocabList.Location = new System.Drawing.Point(12, 35);
+            this.lbVocabList.Location = new System.Drawing.Point(12, 44);
             this.lbVocabList.Name = "lbVocabList";
             this.lbVocabList.Size = new System.Drawing.Size(120, 368);
             this.lbVocabList.TabIndex = 0;
@@ -59,7 +59,7 @@
             // lblVocabList
             // 
             this.lblVocabList.AutoSize = true;
-            this.lblVocabList.Location = new System.Drawing.Point(12, 19);
+            this.lblVocabList.Location = new System.Drawing.Point(12, 28);
             this.lblVocabList.Name = "lblVocabList";
             this.lblVocabList.Size = new System.Drawing.Size(57, 13);
             this.lblVocabList.TabIndex = 2;

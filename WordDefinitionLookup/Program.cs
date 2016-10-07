@@ -18,8 +18,8 @@ namespace WordLookup
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Remove references to specific dictionary projects when DictionaryFactory complete
-            List<IWordDictionary> availableDictionaries = WordLookup.WordDictionaryFactory.GetAvailableDictionaries();
-            List<IExport> availableExports = WordLookup.ExportFactory.GetAvailableExports();
+            List<IWordDictionary> availableDictionaries = WordDictionaryFactory.GetAvailableDictionaries();
+            List<IExport> availableExports = ExportFactory.GetAvailableExports();
 
             Application.Run(new frmWordLookup(availableDictionaries,availableExports));
             
