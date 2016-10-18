@@ -18,7 +18,9 @@ namespace WordLookup
             Application.SetCompatibleTextRenderingDefault(false);
 
 
-            List<VocabWord> vocabWordList = new List<VocabWord> { new VocabWord("test") };
+            List<VocabWord> vocabWordList = new List<VocabWord> { new VocabWord(DateTime.Now.ToString()) };
+            vocabWordList.Add(new VocabWord(DateTime.Now.ToString()));
+            
             Application.Run(new frmQuizletUpload(vocabWordList));
             //Application.Run(new frmQuizletAuthorize());
             

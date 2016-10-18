@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,30 +15,54 @@ namespace WordLookup
     {
         public List<VocabWord> VocabList;
         public QuizletUser User;
+        public QuizletConnection Connection;
 
         public frmQuizletUpload(List<VocabWord> vocabWordList)
         {
             InitializeComponent();
             VocabList = vocabWordList;
+            
         }
-
-
+        
         private void frmQuizletUpload_Load(object sender, EventArgs e)
         {
-            cboUploadType.SelectedIndex = 1;
+            Connection = new QuizletConnection();
+            Connection.TermUploaded += Connection_TermUploaded;
+            User = Connection.QuizletUser;
             DisplayVocabList();
             DisplayAvailableSets();           
         }
 
+        private void Connection_TermUploaded(object sender, UploadStringCompletedEventArgs e)
+        {
+            string result = e.Result.ToString();
+            
+            lbUploadedTerms.Items.Add(e.Result.ToString());
+        }
+
         private void DisplayAvailableSets()
         {
-            QuizletConnection connection = new QuizletConnection();
-            QuizletUser user = connection.GetQuizletUser();
-
-            foreach (var item in user.sets)
+            try
             {
-                lbSets.Items.Add(item.title);
+                
+                IEnumerable<Set> availableSets = from set in User.sets
+                                                where set.title.Contains("Noah") || set.title.Contains("Test Study Set")
+                                                select set;
+                
+                lbSets.DisplayMember = "title";
+                lbSets.ValueMember = "id";
+
+                foreach (var set in availableSets)
+                {
+                    lbSets.Items.Add(set);
+                }
             }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.Message);
+                throw;
+            }
+            
         }
 
         private void DisplayVocabList()
@@ -46,53 +71,34 @@ namespace WordLookup
             {
                 lbVocabList.Items.Add(word);
             }
+
         }
 
-        //private QuizletUser GetUser()
-        //{
-        //    // Todo - Read user info from configuration
-        //    // ToDo - If not valid connection info - Load Autorization form & save config
-        //    // ToDo - Load Available sets
-
-        //    QuizletUser user = ReadUserFromConfig();
-
-        //    //if (user == null)
-        //    //{
-        //    //    var AuthRequest = new QuizletAuthRequest();
-        //    //    var AuthResponse = new QuizletAuthResponse(AuthRequest);
-        //    //    var quizletSession = new QuizletConnection(AuthResponse);
-        //    //    user = quizletSession.GetQuizletUser();
-        //    //}
-
-        //    return user;
-        //}
-
-        //private QuizletUser ReadUserFromConfig()
-        //{
-        //    QuizletConfig configFile = new QuizletConfig();
-
-        //    QuizletUser user = QuizletConfig.GetUser();
-        //    return user;
-        //}
-
+        
         private void btnUpload_Click(object sender, EventArgs e)
         {
-            if (cboUploadType.SelectedItem.ToString() == "Add to Existing")
+            if (lbSets.SelectedItem != null)
             {
-                //UploadList(lbSets.SelectedItem);
-
+                var result = MessageBox.Show("You are uploading the vocabulary list to the following Study Set: " + lbSets.SelectedItem,"Confirm Upload", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                Connection.AddListToSet(VocabList, (Set)lbSets.SelectedItem);
+                }
+                else
+                {
+                    MessageBox.Show("Upload to Quizlet cancelled.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("You must select a Study Set to upload the vocabulary list.");
             }
 
         }
-
-        private void cboUploadType_SelectedIndexChanged(object sender, EventArgs e)
+                
+        private void lbSets_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //ToDo - Refactor to make more flexible and comprehensible
-            lblSets.Visible = Convert.ToBoolean(cboUploadType.SelectedIndex);
-            lbSets.Visible = Convert.ToBoolean(cboUploadType.SelectedIndex);
-
-            txtNewSet.Visible = !Convert.ToBoolean(cboUploadType.SelectedIndex);
-            lblNewSet.Visible = !Convert.ToBoolean(cboUploadType.SelectedIndex);
+            Set selectedSet = (Set)lbSets.SelectedItem;           
         }
     }
 }

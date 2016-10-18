@@ -71,6 +71,7 @@
     <Compile Include="QuizletObjects.cs" />
     <Compile Include="ExportQuizlet.cs" />
     <Compile Include="QuizletConnection.cs" />
+    <Compile Include="QuizletTermUploadedEventArgs.cs" />
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="frmQuizletAuthorize.resx">
       <DependentUpon>frmQuizletAuthorize.cs</DependentUpon>

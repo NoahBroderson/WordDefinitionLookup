@@ -24,10 +24,10 @@ namespace WordLookup
 
         private void frmQuizletAuthorize_Load(object sender, EventArgs e)
         {
-            LoadRequestInfo();            
+            DisplayRequestInfo();            
         }
 
-        private void LoadRequestInfo()
+        private void DisplayRequestInfo()
         {
             txtClientID.Text = AuthRequest.ClientID;
             txtSecretKey.Text = AuthRequest.SecretKey;
@@ -40,10 +40,11 @@ namespace WordLookup
             string ClientIDParam = AuthRequest.ClientID;
             string RedirectUriParam = AuthRequest.RedirectUri;
             int ReadStateParam = new Random().Next(10000);
-            //string RedirectUriParam = Properties.Settings.Default.RedirectURI;
+            string Scope = "read write_set";
+            //string Scope = "write_set";
 
             string Endpoint = "https://quizlet.com/authorize";
-            string Parameters = "?response_type=code&client_id=" + ClientIDParam + "&scope=read&state=" + ReadStateParam.ToString() + "&redirect_uri=" + RedirectUriParam;
+            string Parameters = "?response_type=code&client_id=" + ClientIDParam + "&scope=" + Scope + "&state=" + ReadStateParam.ToString() + "&redirect_uri=" + RedirectUriParam;
             string Request = Endpoint + "/" + Parameters;
             wbAuthorize.Navigated += OnNavigated;
             wbAuthorize.Url = new System.Uri(Request);

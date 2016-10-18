@@ -14,14 +14,22 @@ namespace WordLookup
         {
             QuizletAuthRequest requestInfo = null;
 
-            StreamReader reader = new StreamReader("QuizletRequest.json");
-            using (reader)
+            try
             {
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                requestInfo = serializer.Deserialize<QuizletAuthRequest>(reader.ReadToEnd());
-            }
+                StreamReader reader = new StreamReader("QuizletRequest.json");
+                using (reader)
+                {
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    requestInfo = serializer.Deserialize<QuizletAuthRequest>(reader.ReadToEnd());
+                }
 
-            return requestInfo;
+                return requestInfo;
+            }
+            catch (Exception error)
+            {
+                throw error;
+            }
+            
         }
 
         public void SaveRequestInfo(QuizletAuthRequest requestInfo)
@@ -34,7 +42,7 @@ namespace WordLookup
             }
         }
 
-        public QuizletAuthResponse ReadResponseInfo()
+        public QuizletAuthResponse ReadAuthResponseInfo()
         {
             QuizletAuthResponse responseInfo = null;
 
