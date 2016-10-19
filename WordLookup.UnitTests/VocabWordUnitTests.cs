@@ -65,7 +65,7 @@ namespace WordLookup.UnitTests
             TestWord.Definitions.Add("Test Definition");
             TestWord.Definitions.Add("Test Definition 2");
 
-            Assert.AreEqual(TestWord.Definition, "Test Definition");
+            Assert.AreEqual("Test Definition",TestWord.Definition);
         }
     }
 }

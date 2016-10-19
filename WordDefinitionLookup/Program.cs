@@ -6,6 +6,9 @@ using System.Windows.Forms;
 
 namespace WordLookup
 {
+    //ToDo- Unit Testing for all objects (Mocks?)
+    //
+
     static class Program
     {
         /// <summary>
@@ -17,7 +20,7 @@ namespace WordLookup
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Remove references to specific dictionary projects when DictionaryFactory complete
+            // ToDo - Remove references to specific dictionary projects when DictionaryFactory complete
             List<IWordDictionary> availableDictionaries = WordDictionaryFactory.GetAvailableDictionaries();
             List<IExport> availableExports = ExportFactory.GetAvailableExports();
 

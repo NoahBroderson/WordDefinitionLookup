@@ -33,11 +33,11 @@ namespace WordLookup
             DisplayAvailableSets();           
         }
 
-        private void Connection_TermUploaded(object sender, UploadStringCompletedEventArgs e)
+        private void Connection_TermUploaded(object sender, QuizletTermUploadedEventArgs e)
         {
-            string result = e.Result.ToString();
+            string result = e.TermUploaded;
             
-            lbUploadedTerms.Items.Add(e.Result.ToString());
+            lbUploadedTerms.Items.Add(result);
         }
 
         private void DisplayAvailableSets()
@@ -51,11 +51,8 @@ namespace WordLookup
                 
                 lbSets.DisplayMember = "title";
                 lbSets.ValueMember = "id";
-
-                foreach (var set in availableSets)
-                {
-                    lbSets.Items.Add(set);
-                }
+                lbSets.DataSource = availableSets.ToList();
+                lbSets.Refresh();
             }
             catch (Exception error)
             {
@@ -71,7 +68,6 @@ namespace WordLookup
             {
                 lbVocabList.Items.Add(word);
             }
-
         }
 
         
@@ -79,10 +75,14 @@ namespace WordLookup
         {
             if (lbSets.SelectedItem != null)
             {
-                var result = MessageBox.Show("You are uploading the vocabulary list to the following Study Set: " + lbSets.SelectedItem,"Confirm Upload", MessageBoxButtons.YesNo);
+                Set selectedSet = (Set)lbSets.SelectedItem;
+                
+                var result = MessageBox.Show("You are uploading the vocabulary list to the following Study Set: " + 
+                    selectedSet.title,"Confirm Upload", MessageBoxButtons.YesNo);
+
                 if (result == DialogResult.Yes)
                 {
-                Connection.AddListToSet(VocabList, (Set)lbSets.SelectedItem);
+                    Connection.UploadListToSet(VocabList, (Set)lbSets.SelectedItem);
                 }
                 else
                 {
@@ -93,7 +93,6 @@ namespace WordLookup
             {
                 MessageBox.Show("You must select a Study Set to upload the vocabulary list.");
             }
-
         }
                 
         private void lbSets_SelectedIndexChanged(object sender, EventArgs e)

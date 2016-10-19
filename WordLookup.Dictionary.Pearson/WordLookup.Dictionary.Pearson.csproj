@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="PearsonDictionary.cs" />
     <Compile Include="PearsonJsonResponse.cs" />
-    <Compile Include="PearsonWord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

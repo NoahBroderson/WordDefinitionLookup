@@ -46,8 +46,7 @@ namespace WordLookup
             string Endpoint = "https://api.quizlet.com/2.0/users";
             string Parameter = authorization.user_id;
             string AccessToken = "?access_token=" + authorization.access_token + "&whitespace=1";
-            string Request = Endpoint + "/" + Parameter + "/" + AccessToken;
-            //todo - put in "Using" block
+            string Request = Endpoint + "/" + Parameter + "/" + AccessToken;            
             string Response = new WebClient().DownloadString(Request);
             JavaScriptSerializer Serializer = new JavaScriptSerializer();
 
@@ -66,16 +65,16 @@ namespace WordLookup
             return response;
         }
 
-        public void AddListToSet(List<VocabWord> vocabList, Set selectedSet)
+        public void UploadListToSet(List<VocabWord> vocabList, Set selectedSet)
         {
             //ToDo - Add event to notify of each term uploaded
             foreach (var term in vocabList)
             {
-            AddTermToSet(term.ToString(), term.Definition, selectedSet.id.ToString());
+            UploadTermToSet(term.ToString(), term.Definition, selectedSet.id.ToString());
             }
         }
 
-        private void AddTermToSet(string term, string definition, string setID)
+        private void UploadTermToSet(string term, string definition, string setID)
         {
             Uri QuizletURI = new Uri("https://api.quizlet.com/2.0/sets/" + setID + "/terms/");
 
@@ -114,20 +113,31 @@ namespace WordLookup
             }
         }
 
-        public event EventHandler<UploadStringCompletedEventArgs> TermUploaded;
+        public event EventHandler<QuizletTermUploadedEventArgs> TermUploaded;
 
         private void ClientOnUploadStringCompleted(object sender, UploadStringCompletedEventArgs e)
-        {         
-            OnTermUploaded(e);            
+        {
+            //Todo - Add error handling in case upload fails
+            string term = GetTermFromUploadResponse(e);
+            QuizletTermUploadedEventArgs termUploaded = new QuizletTermUploadedEventArgs() { TermUploaded = term };
+
+            OnTermUploaded(termUploaded);            
         }
 
-        private void OnTermUploaded(UploadStringCompletedEventArgs e)
+        private string GetTermFromUploadResponse(UploadStringCompletedEventArgs e)
         {
-            EventHandler<UploadStringCompletedEventArgs> handler = TermUploaded;
+            var serializer = new JavaScriptSerializer();
+            QuizletUploadResponse response = serializer.Deserialize<QuizletUploadResponse>(e.Result.ToString());
+            string term = response.term;
+
+            return term;
+        }
+
+        private void OnTermUploaded(QuizletTermUploadedEventArgs e)
+        {
+            EventHandler<QuizletTermUploadedEventArgs> handler = TermUploaded;
             if (handler != null)
-            {
-                //var uploadArgs = new QuizletTermUploadedEventArgs();
-               // uploadArgs.TermUploaded = GetTermUploaded(e);
+            {                
                 TermUploaded(this, e);
             }
         }
