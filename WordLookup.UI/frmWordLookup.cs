@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WordLookup
 {
@@ -8,19 +9,39 @@ namespace WordLookup
     {
         private List<VocabWord> _vocabList = new List<VocabWord>();
         private IWordDictionary _selectedDictionary;
+        private const string TOP_DEFINITIONS_DISPLAY_MEMBER = "Definition";
+        private const string WORD_LIST_DISPLAY_MEMBER = "Word";
+       // private const string ALT_DEFINITIONS_DISPLAY_MEMBER = "???";
 
         public frmWordLookup(List<IWordDictionary> availableDictionaries, List<IExport> availableExports)
         {
             InitializeComponent();
-            cboDictionary.DataSource = availableDictionaries;
-            cboDictionary.DisplayMember = "Name";
-            cboDictionary.SelectedIndex = 0;
+            //cboDictionary.DataSource = availableDictionaries;
+            //cboDictionary.DisplayMember = "Name";
+            //cboDictionary.SelectedIndex = 0;
+            FillAvailableDictionaryOptions(availableDictionaries);
+            FillAvailableExports(availableExports);
+            
+        }
 
+        private void FillAvailableExports(List<IExport> availableExports)
+        {
             cboExportTo.DataSource = availableExports;
             cboExportTo.DisplayMember = "Name";
             cboExportTo.SelectedIndex = 0;
         }
 
+        private void FillAvailableDictionaryOptions(List<IWordDictionary> availableDictionaries)
+        {
+            foreach (var dictionary in availableDictionaries)
+            {
+                checkedLBDictionaries.Items.Add(dictionary,true);
+                
+            }
+            
+        }
+
+        
         private void frmWordLookup_Load(object sender, EventArgs e)
         {
         }
@@ -30,10 +51,8 @@ namespace WordLookup
             try
             {
                 if (lbTopDefinitions.DataSource != null)
-                {
-                    var selectedWord = lbTopDefinitions.SelectedItem as VocabWord;
-                    lbAltDefinitions.DataSource = selectedWord.Definitions;
-                    lbAltDefinitions.Refresh();
+                {                    
+                    RefreshAltDefinitions();
                 }
 
             }
@@ -51,7 +70,7 @@ namespace WordLookup
             try
             {
                 selectedWord.Definition = lbAltDefinitions.SelectedItem.ToString();
-                RefreshTopDefinitionsListbox();
+                RefreshListbox(lbTopDefinitions, TOP_DEFINITIONS_DISPLAY_MEMBER);
             }
             catch (Exception Error)
             {
@@ -59,17 +78,16 @@ namespace WordLookup
                 MessageBox.Show(Error.Message);
             }
         }
-
-
-        private void RefreshTopDefinitionsListbox()
+                
+        private void RefreshListbox(ListBox listboxToRefresh, string displayMember = "")
         {
             try
             {
-                lbTopDefinitions.DataSource = null;
-                lbTopDefinitions.Items.Clear();
-                lbTopDefinitions.DataSource = _vocabList;
-                lbTopDefinitions.DisplayMember = "Definition";
-                lbTopDefinitions.Refresh();
+                listboxToRefresh.DataSource = null;
+                listboxToRefresh.Items.Clear();
+                listboxToRefresh.DataSource = _vocabList;
+                listboxToRefresh.DisplayMember = displayMember;
+                listboxToRefresh.Refresh();
             }
             catch (Exception Error)
             {
@@ -77,21 +95,15 @@ namespace WordLookup
             }
         }
 
-        private void RefreshWordListbox()
+        private void RefreshAltDefinitions()
         {
-            try
-            {
-                lbWordList.DataSource = null;
-                lbWordList.Items.Clear();
-                lbWordList.DataSource = _vocabList;                
-                lbWordList.Refresh();
-            }
-            catch (Exception Error)
-            {
-                MessageBox.Show("Error: {0}", Error.Message);
-            }
+            VocabWord selectedWord = (VocabWord)lbTopDefinitions.SelectedItem;
+            lbAltDefinitions.DataSource = null;
+            lbAltDefinitions.Items.Clear();
+            lbAltDefinitions.DataSource = selectedWord.Definitions;
+            lbAltDefinitions.Refresh();
         }
-
+        
         private void btnExport_Click(object sender, EventArgs e)
         {
             IExport Export = (IExport)cboExportTo.SelectedItem;
@@ -105,7 +117,7 @@ namespace WordLookup
                 var lb = (ListBox)sender;
                 var editForm = new frmEdit((VocabWord)lb.SelectedItem, EditType.Definition);
                 editForm.ShowDialog();
-                RefreshTopDefinitionsListbox();
+                RefreshListbox(lbTopDefinitions, TOP_DEFINITIONS_DISPLAY_MEMBER);
                 
             }
             catch (Exception Error)
@@ -127,8 +139,7 @@ namespace WordLookup
                 ClearListBoxes();
                 _vocabList.Clear();
                 UpdateVocabListFromClipboard();
-                lbWordList.DataSource = _vocabList;
-                lbWordList.Refresh();
+                RefreshListbox(lbWordList,WORD_LIST_DISPLAY_MEMBER);
 
                 btnLookup.Enabled = true;
                 btnLookup.Focus();
@@ -173,11 +184,11 @@ namespace WordLookup
 
                 foreach (var word in _vocabList)
                 {
-                    _selectedDictionary.Lookup(word);
+                    RunLookup(word);
                 }
-                RefreshWordListbox();
-                RefreshTopDefinitionsListbox();
-
+                RefreshListbox(lbWordList,WORD_LIST_DISPLAY_MEMBER);
+                RefreshListbox(lbTopDefinitions,TOP_DEFINITIONS_DISPLAY_MEMBER);
+                RefreshAltDefinitions();
                 btnLookup.Enabled = false;
             }
             catch (Exception Error)
@@ -200,14 +211,33 @@ namespace WordLookup
                 {
                     VocabWord selectedWord = GetSelectedWord(sender);
                     Edit(selectedWord);
-                    _selectedDictionary.Lookup(selectedWord);
-                    RefreshWordListbox();
-                    RefreshTopDefinitionsListbox();
+                    RunLookup(selectedWord);
+                    RefreshListbox(lbWordList, WORD_LIST_DISPLAY_MEMBER);
+                    RefreshListbox(lbTopDefinitions, TOP_DEFINITIONS_DISPLAY_MEMBER);
                 }
             }
             catch (Exception Error)
             {
                 MessageBox.Show(Error.Message);
+            }
+        }
+
+        private void RunLookup(VocabWord selectedWord)
+        {
+            //var _selectedDictionaries = from dictionary in checkedLBDictionaries.Items 
+            //                            where dictionary == true
+            //                            select dictionary;
+            List<IWordDictionary> _selectedDictionaries = new List<IWordDictionary>();
+
+            foreach (var item in checkedLBDictionaries.CheckedItems)
+            {
+                IWordDictionary dictionary = (IWordDictionary)item;
+                dictionary.Lookup(selectedWord);
+            }
+
+            foreach (var dictionary in _selectedDictionaries)
+            {
+                
             }
         }
 
@@ -242,8 +272,8 @@ namespace WordLookup
                     if (lbWordList.DataSource != null)
                     {
                         this._vocabList.Remove((VocabWord)lbWordList.SelectedItem);
-                        RefreshTopDefinitionsListbox();
-                        RefreshWordListbox();
+                        RefreshListbox(lbTopDefinitions, TOP_DEFINITIONS_DISPLAY_MEMBER);
+                        RefreshListbox(lbWordList, WORD_LIST_DISPLAY_MEMBER);
                     }
                     else
                     {
@@ -258,21 +288,21 @@ namespace WordLookup
         }
 
 
-        private void cboDictionary_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _selectedDictionary = (IWordDictionary)cboDictionary.SelectedItem;
+        //private void cboDictionary_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    _selectedDictionary = (IWordDictionary)cboDictionary.SelectedItem;
 
-            if (lbWordList.Items.Count > 0)
-            {
-                VocabWord word;
-                foreach (var item in lbWordList.Items)
-                {
-                    word = (VocabWord)item;
-                    _selectedDictionary.Lookup(word);
-                }
-            }
+        //    if (lbWordList.Items.Count > 0)
+        //    {
+        //        VocabWord word;
+        //        foreach (var item in lbWordList.Items)
+        //        {
+        //            word = (VocabWord)item;
+        //            _selectedDictionary.Lookup(word);
+        //        }
+        //    }
 
-        }
+        //}
 
         private void ClearForm()
         {

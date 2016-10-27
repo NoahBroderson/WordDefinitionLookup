@@ -10,8 +10,6 @@ namespace WordLookup
     {
         string Name { get;}
 
-        //List<string> GetDefinitions(string word);
-
         VocabWord Lookup(VocabWord wordToLookup);
     }
 }

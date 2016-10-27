@@ -19,6 +19,11 @@ namespace WordLookup
             }
         }
 
+        public  override string ToString()
+        {
+            return Name;
+        }
+
         public List<string> GetDefinitions(string word)
         {
             string RequestString = string.Format("https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword.exact={0}&offset=0", word);

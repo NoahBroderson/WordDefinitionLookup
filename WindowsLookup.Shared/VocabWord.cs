@@ -24,7 +24,13 @@ namespace WordLookup
         public string Word
         {
             get { return _lookupWord; }
-            set { _lookupWord = value; }
+            set {
+                if (value.ToLower() != _lookupWord.ToLower())
+                {
+                    _definitions.Clear();
+                    _definition = null;
+                }
+                _lookupWord = value; }
         }
         
         private string _definition;
@@ -71,7 +77,15 @@ namespace WordLookup
                 throw new ArgumentException("Definition cannot be null or empty");
             }
 
+            if (_definition == null)
+            {
+                _definition = definition;
+            }
+
+            if (!_definitions.Contains(definition))
+            {
             _definitions.Add(definition);
+            }
         }
 
         public void UpdateDefinition(int definitionIndex, string newDefinition)

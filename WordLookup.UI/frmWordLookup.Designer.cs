@@ -37,10 +37,10 @@
             this.lbWordList = new System.Windows.Forms.ListBox();
             this.lblWordList = new System.Windows.Forms.Label();
             this.btnLookup = new System.Windows.Forms.Button();
-            this.cboDictionary = new System.Windows.Forms.ComboBox();
             this.lblIn = new System.Windows.Forms.Label();
             this.cboExportTo = new System.Windows.Forms.ComboBox();
             this.lblExportTo = new System.Windows.Forms.Label();
+            this.checkedLBDictionaries = new System.Windows.Forms.CheckedListBox();
             this.SuspendLayout();
             // 
             // lblTopDefs
@@ -154,15 +154,6 @@
             this.btnLookup.UseVisualStyleBackColor = true;
             this.btnLookup.Click += new System.EventHandler(this.btnLookup_Click);
             // 
-            // cboDictionary
-            // 
-            this.cboDictionary.FormattingEnabled = true;
-            this.cboDictionary.Location = new System.Drawing.Point(239, 414);
-            this.cboDictionary.Name = "cboDictionary";
-            this.cboDictionary.Size = new System.Drawing.Size(157, 21);
-            this.cboDictionary.TabIndex = 16;
-            this.cboDictionary.SelectedIndexChanged += new System.EventHandler(this.cboDictionary_SelectedIndexChanged);
-            // 
             // lblIn
             // 
             this.lblIn.AutoSize = true;
@@ -189,15 +180,23 @@
             this.lblExportTo.TabIndex = 20;
             this.lblExportTo.Text = "Export To:";
             // 
+            // checkedLBDictionaries
+            // 
+            this.checkedLBDictionaries.FormattingEnabled = true;
+            this.checkedLBDictionaries.Location = new System.Drawing.Point(245, 417);
+            this.checkedLBDictionaries.Name = "checkedLBDictionaries";
+            this.checkedLBDictionaries.Size = new System.Drawing.Size(120, 79);
+            this.checkedLBDictionaries.TabIndex = 21;
+            // 
             // frmWordLookup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1244, 528);
+            this.Controls.Add(this.checkedLBDictionaries);
             this.Controls.Add(this.lblExportTo);
             this.Controls.Add(this.cboExportTo);
             this.Controls.Add(this.lblIn);
-            this.Controls.Add(this.cboDictionary);
             this.Controls.Add(this.btnLookup);
             this.Controls.Add(this.btnPasteList);
             this.Controls.Add(this.lbWordList);
@@ -228,10 +227,10 @@
         private System.Windows.Forms.ListBox lbWordList;
         private System.Windows.Forms.Label lblWordList;
         private System.Windows.Forms.Button btnLookup;
-        private System.Windows.Forms.ComboBox cboDictionary;
         private System.Windows.Forms.Label lblIn;
         private System.Windows.Forms.ComboBox cboExportTo;
         private System.Windows.Forms.Label lblExportTo;
+        private System.Windows.Forms.CheckedListBox checkedLBDictionaries;
     }
 }
 
