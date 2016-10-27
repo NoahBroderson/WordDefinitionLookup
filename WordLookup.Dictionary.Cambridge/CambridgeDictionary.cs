@@ -17,6 +17,16 @@ namespace WordLookup
             }            
         }
 
+        public VocabWord Lookup(VocabWord wordToLookup)
+        {
+            foreach (string definition in GetDefinitions(wordToLookup.Word))
+            {
+                wordToLookup.AddDefinition(definition);
+            } 
+
+            return wordToLookup;
+        }
+
         List<string> _Definitions;
 
         public List<string> GetDefinitions(string word)

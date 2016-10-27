@@ -4,20 +4,22 @@ using System.Net;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace WordLookup
 { 
 
     public class VocabWord
     {
+        private string _lookupWord;
+        const string NOT_DEFINED = "Not Defined";
 
         public VocabWord(string word)
         {
             _lookupWord = word;
             _definitions = new List<string>();
+            
         }
-
-        private string _lookupWord;
 
         public string Word
         {
@@ -33,30 +35,53 @@ namespace WordLookup
             {
                 if (_definition == null)
                 {
-                    return "Not Defined";
+                    return NOT_DEFINED;
                 }
-                else
-                {
-                    return _definition;
-                }
+
+                return _definition;
             }
 
             set { _definition = value; }
         }
-
+        
         private List<string> _definitions;
 
-        public List<string> Definitions
+        public ReadOnlyCollection<string> Definitions
         {
             get
             {
-                return _definitions;
+                ReadOnlyCollection<string> _readOnlyDefinitions = new ReadOnlyCollection<string>(_definitions);
+                return _readOnlyDefinitions;
             }
-            set
+            //set
+            //{
+            //    if (value.Count > 0)
+            //    {
+            //    _definitions = value;
+            //    }
+               
+            //    _definition = _definitions[0];
+            //}
+        }
+
+        public void AddDefinition(string definition)
+        {
+            if (string.IsNullOrEmpty(definition))
             {
-                _definitions = value;
-                _definition = _definitions[0];
+                throw new ArgumentException("Definition cannot be null or empty");
             }
+
+            _definitions.Add(definition);
+        }
+
+        public void UpdateDefinition(int definitionIndex, string newDefinition)
+        {
+            if (string.IsNullOrEmpty(newDefinition))
+            {
+                throw new ArgumentException("Definition cannot be null or empty");
+            }
+
+            _definitions[definitionIndex] = newDefinition;
         }
 
         public override String ToString()

@@ -13,9 +13,9 @@ namespace WordLookup
 {
     public partial class frmQuizletUpload : Form
     {
-        public List<VocabWord> VocabList;
-        public QuizletUser User;
-        public QuizletConnection Connection;
+        private List<VocabWord> VocabList;
+        private QuizletUser _user;
+        private QuizletConnection Connection;
 
         public frmQuizletUpload(List<VocabWord> vocabWordList)
         {
@@ -28,7 +28,7 @@ namespace WordLookup
         {
             Connection = new QuizletConnection();
             Connection.TermUploaded += Connection_TermUploaded;
-            User = Connection.QuizletUser;
+            _user = Connection.QuizletUser;
             DisplayVocabList();
             DisplayAvailableSets();           
         }
@@ -44,8 +44,8 @@ namespace WordLookup
         {
             try
             {
-                
-                IEnumerable<Set> availableSets = from set in User.sets
+//ToDo - Determine filter for valid sets
+                IEnumerable<Set> availableSets = from set in _user.sets
                                                 where set.title.Contains("Noah") || set.title.Contains("Test Study Set")
                                                 select set;
                 
@@ -77,7 +77,7 @@ namespace WordLookup
             {
                 Set selectedSet = (Set)lbSets.SelectedItem;
                 
-                var result = MessageBox.Show("You are uploading the vocabulary list to the following Study Set: " + 
+                var result = MessageBox.Show("Do you want to continue uploading the vocabulary list to the following Study Set? -  " + 
                     selectedSet.title,"Confirm Upload", MessageBoxButtons.YesNo);
 
                 if (result == DialogResult.Yes)

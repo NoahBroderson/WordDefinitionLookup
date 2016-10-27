@@ -13,22 +13,22 @@ namespace WordLookup
     public partial class frmEdit : Form
     {
         private VocabWord wordToEdit;
-        private string wordProperty;
+        private EditType typeOfEdit;
 
         public frmEdit()
         {
             InitializeComponent();
         }
 
-        public frmEdit(VocabWord selectedWord, string propertyToEdit)
+        public frmEdit(VocabWord selectedWord, EditType editType)
         {
             try
             {
                 InitializeComponent();
                 wordToEdit = selectedWord;
-                wordProperty = propertyToEdit;
+                typeOfEdit = editType;
 
-                if (wordProperty == "Word")
+                if (typeOfEdit == EditType.Word)
                 {
                     txtEditField.Text = wordToEdit.Word;
                 }
@@ -53,7 +53,7 @@ namespace WordLookup
 
         private void btnSaveDef_Click(object sender, EventArgs e)
         {
-            if (wordProperty == "Word")
+            if (typeOfEdit == EditType.Word)
             {
                 wordToEdit.Word = txtEditField.Text ;
             }

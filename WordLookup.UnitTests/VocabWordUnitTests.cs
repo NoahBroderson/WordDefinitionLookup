@@ -21,11 +21,7 @@ namespace WordLookup.Tests
             Assert.AreEqual(constructorWord,outputWord);
         }
 
-        [TestMethod()]
-        public void WordTest1()
-        {
-            Assert.Fail();
-        }
+        
     }
 }
 
@@ -49,23 +45,57 @@ namespace WordLookup.UnitTests
         }
 
         [TestMethod]
-        public void VocabWord_DefaultDefinitionListHasZeroCount()
+        public void VocabWord_DefaultDefinitionListHasCountOfOne()
         {
-            var TestWord = new VocabWord("TestName");
+            //Arrange
+            string constructorWord = "TestName";
 
+            //Act
+            var TestWord = new VocabWord(constructorWord);
+
+            //Assert
             Assert.IsNotNull(TestWord.Definitions);
-            Assert.IsTrue(TestWord.Definitions.Count == 0);
+            Assert.IsTrue(TestWord.Definitions.Count == 1);
         }
 
         [TestMethod]
-        public void ReturnsDefinitionFromIndexZeroIfNotChanged()
+        public void VocabWord_ReturnsDefinitionFromIndexZeroIfNotChanged()
+        {
+            //Arrange
+            var TestWord = new VocabWord("TestName");
+            TestDictionary Dictionary = new TestDictionary();
+
+            //Act
+            TestWord.Definitions = Dictionary.GetDefinitions(TestWord.Word);
+        
+            //Assert
+            Assert.AreEqual("Definition1",TestWord.Definition);
+        }
+
+        [TestMethod]
+        public void CountOfDefinitionListIsTwoAfterAddingTwoItems()
+        {
+            //Arrange
+            var TestWord = new VocabWord("TestName");
+            var Dictionary = new TestDictionary();
+            
+            //Act
+            TestWord.Definitions = Dictionary.GetDefinitions(TestWord.Word);
+
+            //Assert
+            Assert.AreEqual(2, TestWord.Definitions.Count);
+        }
+
+        [TestMethod]
+        public void CountOfDefinitionListIsOneAfterAddingTwoItemsAndDeletingOne()
         {
             var TestWord = new VocabWord("TestName");
 
             TestWord.Definitions.Add("Test Definition");
             TestWord.Definitions.Add("Test Definition 2");
+            TestWord.Definitions.Remove("Test Definition");
 
-            Assert.AreEqual("Test Definition",TestWord.Definition);
+            Assert.AreEqual(1, TestWord.Definitions.Count);
         }
     }
 }

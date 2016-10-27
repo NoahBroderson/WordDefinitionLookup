@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using WordLookup;
 
 namespace WordLookup
 {
     public partial class frmWordLookup : Form
     {
-        List<VocabWord> _vocabList = new List<VocabWord>();
-        IWordDictionary _sectedDictionary;
+        private List<VocabWord> _vocabList = new List<VocabWord>();
+        private IWordDictionary _selectedDictionary;
 
         public frmWordLookup(List<IWordDictionary> availableDictionaries, List<IExport> availableExports)
         {
@@ -52,7 +51,7 @@ namespace WordLookup
             try
             {
                 selectedWord.Definition = lbAltDefinitions.SelectedItem.ToString();
-                RefreshTopDefinitionsList();
+                RefreshTopDefinitionsListbox();
             }
             catch (Exception Error)
             {
@@ -62,7 +61,7 @@ namespace WordLookup
         }
 
 
-        private void RefreshTopDefinitionsList()
+        private void RefreshTopDefinitionsListbox()
         {
             try
             {
@@ -70,7 +69,6 @@ namespace WordLookup
                 lbTopDefinitions.Items.Clear();
                 lbTopDefinitions.DataSource = _vocabList;
                 lbTopDefinitions.DisplayMember = "Definition";
-                //lbTopDefinitions.ValueMember = "Word";
                 lbTopDefinitions.Refresh();
             }
             catch (Exception Error)
@@ -79,7 +77,7 @@ namespace WordLookup
             }
         }
 
-        private void RefreshWordList()
+        private void RefreshWordListbox()
         {
             try
             {
@@ -105,9 +103,10 @@ namespace WordLookup
             try
             {
                 var lb = (ListBox)sender;
-                var editForm = new frmEdit((VocabWord)lb.SelectedItem, "Definition");
+                var editForm = new frmEdit((VocabWord)lb.SelectedItem, EditType.Definition);
                 editForm.ShowDialog();
-                RefreshTopDefinitionsList();
+                RefreshTopDefinitionsListbox();
+                
             }
             catch (Exception Error)
             {
@@ -118,7 +117,6 @@ namespace WordLookup
 
         private void btnPasteList_Click(object sender, EventArgs e)
         {
-            _vocabList.Clear();
             PasteWordList();
         }
 
@@ -126,16 +124,9 @@ namespace WordLookup
         {
             try
             {
-                string clipBoardText = Clipboard.GetText();
-                string[] wordList = clipBoardText.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
                 ClearListBoxes();
-
-                VocabWord _newVocabWord;
-                foreach (string item in wordList)
-                {
-                    _newVocabWord = new VocabWord(item.Replace("- ", ""));
-                    _vocabList.Add(_newVocabWord);
-                }
+                _vocabList.Clear();
+                UpdateVocabListFromClipboard();
                 lbWordList.DataSource = _vocabList;
                 lbWordList.Refresh();
 
@@ -145,6 +136,22 @@ namespace WordLookup
             catch (Exception Error)
             {
                 MessageBox.Show(string.Format("Error pasting from clipboard. Error message: {0}", Error.Message));
+            }
+        }
+
+        private void UpdateVocabListFromClipboard()
+        {
+            string clipBoardText = Clipboard.GetText();
+            string[] wordList = clipBoardText.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+
+            VocabWord _newVocabWord;
+            foreach (string item in wordList)
+            {
+                if (!string.IsNullOrEmpty(item))
+                {
+                    _newVocabWord = new VocabWord(item.Replace("- ", ""));
+                    _vocabList.Add(_newVocabWord);
+                }
             }
         }
 
@@ -160,22 +167,17 @@ namespace WordLookup
 
         private void btnLookup_Click(object sender, EventArgs e)
         {
-            RunLookup();
-        }
-
-        private void RunLookup()
-        {
             try
             {
                 ClearForm();
-                
+
                 foreach (var word in _vocabList)
                 {
-                    word.Definitions = _sectedDictionary.GetDefinitions(word.ToString().ToLower());
+                    _selectedDictionary.Lookup(word);
                 }
-                RefreshWordList();
-                RefreshTopDefinitionsList();
-                
+                RefreshWordListbox();
+                RefreshTopDefinitionsListbox();
+
                 btnLookup.Enabled = false;
             }
             catch (Exception Error)
@@ -184,6 +186,11 @@ namespace WordLookup
             }
         }
 
+        //private RunLookup(VocabWord word)
+        //{
+        //    word.Definitions = _sectedDictionary.GetDefinitions(word.ToString().ToLower());
+        //}
+
 
         private void lbWordList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -191,12 +198,11 @@ namespace WordLookup
             {
                 if (lbWordList.DataSource != null)
                 {
-                    var lb = (ListBox)sender;
-                    VocabWord selectedWord = (VocabWord)lb.SelectedItem;
-                    frmEdit editForm = new frmEdit(selectedWord, "Word");
-                    editForm.ShowDialog();
-                    RefreshWordList();
-                    RefreshTopDefinitionsList();
+                    VocabWord selectedWord = GetSelectedWord(sender);
+                    Edit(selectedWord);
+                    _selectedDictionary.Lookup(selectedWord);
+                    RefreshWordListbox();
+                    RefreshTopDefinitionsListbox();
                 }
             }
             catch (Exception Error)
@@ -205,6 +211,18 @@ namespace WordLookup
             }
         }
 
+        private static void Edit(VocabWord selectedWord)
+        {
+            frmEdit editForm = new frmEdit(selectedWord, EditType.Word);
+            editForm.ShowDialog();
+        }
+
+        private static VocabWord GetSelectedWord(object sender)
+        {
+            var lb = (ListBox)sender;
+            VocabWord selectedWord = (VocabWord)lb.SelectedItem;
+            return selectedWord;
+        }
 
         private void frmWordLookup_KeyDown(object sender, KeyEventArgs e)
         {
@@ -224,8 +242,8 @@ namespace WordLookup
                     if (lbWordList.DataSource != null)
                     {
                         this._vocabList.Remove((VocabWord)lbWordList.SelectedItem);
-                        RefreshTopDefinitionsList();
-                        RefreshWordList();
+                        RefreshTopDefinitionsListbox();
+                        RefreshWordListbox();
                     }
                     else
                     {
@@ -242,11 +260,16 @@ namespace WordLookup
 
         private void cboDictionary_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _sectedDictionary = (IWordDictionary)cboDictionary.SelectedItem;
+            _selectedDictionary = (IWordDictionary)cboDictionary.SelectedItem;
 
             if (lbWordList.Items.Count > 0)
             {
-                RunLookup();
+                VocabWord word;
+                foreach (var item in lbWordList.Items)
+                {
+                    word = (VocabWord)item;
+                    _selectedDictionary.Lookup(word);
+                }
             }
 
         }
@@ -275,5 +298,11 @@ namespace WordLookup
             //QuizletForm.ShowDialog();
 
         }
+    }
+
+    public enum EditType
+    {
+        Definition,
+            Word
     }
 }
