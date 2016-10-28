@@ -23,7 +23,10 @@ namespace WordLookup.UnitTests
 
         public VocabWord Lookup(VocabWord wordToLookup)
         {
-            wordToLookup.Definitions = GetDefinitions(wordToLookup.Word);
+            foreach (string definition in GetDefinitions(wordToLookup.Word))
+            {
+                wordToLookup.AddDefinition(definition);
+            }
 
             return wordToLookup;
         }

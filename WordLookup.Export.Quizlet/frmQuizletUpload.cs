@@ -16,6 +16,7 @@ namespace WordLookup
         private List<VocabWord> VocabList;
         private QuizletUser _user;
         private QuizletConnection Connection;
+        private int CountOfTermsUploaded = 0;
 
         public frmQuizletUpload(List<VocabWord> vocabWordList)
         {
@@ -38,6 +39,13 @@ namespace WordLookup
             string result = e.TermUploaded;
             
             lbUploadedTerms.Items.Add(result);
+            CountOfTermsUploaded += 1;
+            if(CountOfTermsUploaded == VocabList.Count)
+            {
+                MessageBox.Show("Upload Complete!");
+                CountOfTermsUploaded = 0;
+                lbUploadedTerms.Items.Clear();
+            }
         }
 
         private void DisplayAvailableSets()
@@ -46,8 +54,9 @@ namespace WordLookup
             {
 //ToDo - Determine filter for valid sets
                 IEnumerable<Set> availableSets = from set in _user.sets
-                                                where set.title.Contains("Noah") || set.title.Contains("Test Study Set")
-                                                select set;
+                                                where set.title.Contains("Noah") || set.title.Contains("Test Study Set") || set.title.Length == 8
+                                                orderby set.title
+                                                 select set;
                 
                 lbSets.DisplayMember = "title";
                 lbSets.ValueMember = "id";

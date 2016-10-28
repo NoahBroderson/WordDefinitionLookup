@@ -17,6 +17,11 @@ namespace WordLookup
             }            
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         public VocabWord Lookup(VocabWord wordToLookup)
         {
             foreach (string definition in GetDefinitions(wordToLookup.Word))

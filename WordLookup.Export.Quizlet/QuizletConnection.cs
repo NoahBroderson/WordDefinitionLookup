@@ -58,8 +58,23 @@ namespace WordLookup
         private QuizletAuthResponse GetAuthResponseFromWeb(QuizletAuthRequest quizletAuthRequest)
         {
             frmQuizletAuthorize authForm = new frmQuizletAuthorize(quizletAuthRequest);
+            QuizletAuthResponse response = new QuizletAuthResponse();
+
+            try
+            {
             authForm.ShowDialog();
-            QuizletAuthResponse response = authForm.AuthResponse;
+            response = authForm.AuthResponse;
+            }
+
+            catch (Exception error)
+            {
+                throw new Exception("Unable to retrieve authorization information from Quizlet web API", error); 
+            }
+
+            if (response == null)
+            {
+                throw new Exception("Unable to retrieve authorization information from Quizlet web API, response was null");
+            }
             config.SaveResponseInfo(response);
 
             return response;
@@ -67,7 +82,6 @@ namespace WordLookup
 
         public void UploadListToSet(List<VocabWord> vocabList, Set selectedSet)
         {
-            //ToDo - Add event to notify of each term uploaded
             foreach (var term in vocabList)
             {
             UploadTermToSet(term.ToString(), term.Definition, selectedSet.id.ToString());

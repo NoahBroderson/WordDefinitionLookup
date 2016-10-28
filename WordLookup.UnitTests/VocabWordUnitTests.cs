@@ -58,44 +58,44 @@ namespace WordLookup.UnitTests
             Assert.IsTrue(TestWord.Definitions.Count == 1);
         }
 
-        [TestMethod]
-        public void VocabWord_ReturnsDefinitionFromIndexZeroIfNotChanged()
-        {
-            //Arrange
-            var TestWord = new VocabWord("TestName");
-            TestDictionary Dictionary = new TestDictionary();
+        //[TestMethod]
+        //public void VocabWord_ReturnsDefinitionFromIndexZeroIfNotChanged()
+        //{
+        //    //Arrange
+        //    var TestWord = new VocabWord("TestName");
+        //    TestDictionary Dictionary = new TestDictionary();
 
-            //Act
-            TestWord.Definitions = Dictionary.GetDefinitions(TestWord.Word);
+        //    //Act
+        //    TestWord.Definitions = Dictionary.GetDefinitions(TestWord.Word);
         
-            //Assert
-            Assert.AreEqual("Definition1",TestWord.Definition);
-        }
+        //    //Assert
+        //    Assert.AreEqual("Definition1",TestWord.Definition);
+        //}
 
-        [TestMethod]
-        public void CountOfDefinitionListIsTwoAfterAddingTwoItems()
-        {
-            //Arrange
-            var TestWord = new VocabWord("TestName");
-            var Dictionary = new TestDictionary();
+        //[TestMethod]
+        //public void CountOfDefinitionListIsTwoAfterAddingTwoItems()
+        //{
+        //    //Arrange
+        //    var TestWord = new VocabWord("TestName");
+        //    var Dictionary = new TestDictionary();
             
-            //Act
-            TestWord.Definitions = Dictionary.GetDefinitions(TestWord.Word);
+        //    //Act
+        //    TestWord.Definitions = Dictionary.GetDefinitions(TestWord.Word);
 
-            //Assert
-            Assert.AreEqual(2, TestWord.Definitions.Count);
-        }
+        //    //Assert
+        //    Assert.AreEqual(2, TestWord.Definitions.Count);
+        //}
 
-        [TestMethod]
-        public void CountOfDefinitionListIsOneAfterAddingTwoItemsAndDeletingOne()
-        {
-            var TestWord = new VocabWord("TestName");
+        //[TestMethod]
+        //public void CountOfDefinitionListIsOneAfterAddingTwoItemsAndDeletingOne()
+        //{
+        //    var TestWord = new VocabWord("TestName");
 
-            TestWord.Definitions.Add("Test Definition");
-            TestWord.Definitions.Add("Test Definition 2");
-            TestWord.Definitions.Remove("Test Definition");
+        //    TestWord.Definitions.Add("Test Definition");
+        //    TestWord.Definitions.Add("Test Definition 2");
+        //    TestWord.Definitions.Remove("Test Definition");
 
-            Assert.AreEqual(1, TestWord.Definitions.Count);
-        }
+        //    Assert.AreEqual(1, TestWord.Definitions.Count);
+        //}
     }
 }

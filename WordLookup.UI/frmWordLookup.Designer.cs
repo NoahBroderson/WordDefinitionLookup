@@ -182,11 +182,13 @@
             // 
             // checkedLBDictionaries
             // 
+            this.checkedLBDictionaries.CheckOnClick = true;
             this.checkedLBDictionaries.FormattingEnabled = true;
             this.checkedLBDictionaries.Location = new System.Drawing.Point(245, 417);
             this.checkedLBDictionaries.Name = "checkedLBDictionaries";
             this.checkedLBDictionaries.Size = new System.Drawing.Size(120, 79);
             this.checkedLBDictionaries.TabIndex = 21;
+            this.checkedLBDictionaries.ThreeDCheckBoxes = true;
             // 
             // frmWordLookup
             // 

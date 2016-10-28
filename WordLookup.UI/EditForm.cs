@@ -14,6 +14,7 @@ namespace WordLookup
     {
         private VocabWord wordToEdit;
         private EditType typeOfEdit;
+        public bool VocabWordModified = false;
 
         public frmEdit()
         {
@@ -55,10 +56,18 @@ namespace WordLookup
         {
             if (typeOfEdit == EditType.Word)
             {
+                if (wordToEdit.Word.ToLower() != txtEditField.Text.ToLower())
+                {
+                    VocabWordModified = true;
+                }
                 wordToEdit.Word = txtEditField.Text ;
             }
             else
             {
+                if (wordToEdit.Definition.ToLower() != txtEditField.Text.ToLower())
+                {
+                    VocabWordModified = true;
+                }
                 wordToEdit.Definition = txtEditField.Text ;
             }
             this.Close();

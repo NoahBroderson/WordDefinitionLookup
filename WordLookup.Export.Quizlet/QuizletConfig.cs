@@ -5,11 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+//using System;
+//using System.IO;
+//using System.Security;
+//using System.Security.Cryptography;
+//using System.Runtime.InteropServices;
+//using System.Text;
 
 namespace WordLookup
 {
     public class QuizletConfigFile
     {
+        private const bool UseEncryption = true;
+        private const string Key = "EncryptionKey";
+        private const string IV = "EncryptionKey";
+
+        public QuizletConfigFile()
+        {
+
+        }
+
         public QuizletAuthRequest ReadRequestInfo()
         {
             QuizletAuthRequest requestInfo = null;
